@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check a listing · TrustNest</title>
+  <meta name="description" content="Paste any rental listing and get a trust report before you pay a token.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <a class="logo" href="index.html" aria-label="TrustNest home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <nav class="links" aria-label="Main">
+        <a href="verify.html" aria-current="page">Verify listings</a>
+        <a href="index.html#choose">StayScores</a>
+        <a href="index.html#live">Find flatmates</a>
+        <a href="index.html#protect">Protect</a>
+      </nav>
+      <a class="btn btn-solid" href="index.html">Home</a>
+    </header>
+
+    <div class="v-head">
+      <h1>Check a listing before you pay.</h1>
+      <p>Paste the message, add what you know and upload the photos. You'll get a trust report in seconds.</p>
+    </div>
+
+    <div class="v-grid">
+      <!-- ============ Input ============ -->
+      <form class="v-form card" id="vForm" novalidate>
+        <fieldset>
+          <legend><span>1</span>Paste the listing</legend>
+          <div class="presets" role="group" aria-label="Try an example">
+            <span>Try:</span>
+            <button type="button" data-preset="army">Army officer scam</button>
+            <button type="button" data-preset="cheap">Too-cheap flat</button>
+            <button type="button" data-preset="genuine">Genuine PG</button>
+          </div>
+          <label class="sr-only" for="listing">Listing text</label>
+          <textarea id="listing" rows="6" placeholder="Paste a WhatsApp message, OLX ad or Instagram post here"></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>2</span>Add what you know</legend>
+          <div class="v-fields">
+            <label>Area
+              <select id="area">
+                <option value="rajpura">Rajpura / Chitkara</option>
+                <option value="zirakpur">Zirakpur</option>
+                <option value="mohali">Mohali</option>
+                <option value="chandigarh">Chandigarh</option>
+              </select>
+            </label>
+            <label>Type
+              <select id="type">
+                <option value="">Detect from text</option>
+                <option value="pg">PG bed</option>
+                <option value="room">Single room</option>
+                <option value="1bhk">1BHK</option>
+                <option value="2bhk">2BHK</option>
+                <option value="3bhk">3BHK</option>
+              </select>
+            </label>
+            <label>Monthly rent (₹)
+              <input id="rent" type="number" inputmode="numeric" min="0" placeholder="Detect from text">
+            </label>
+            <label>Deposit asked (₹)
+              <input id="deposit" type="number" inputmode="numeric" min="0" placeholder="Optional">
+            </label>
+            <label>Owner's phone
+              <input id="phone" type="tel" inputmode="tel" placeholder="Detect from text">
+            </label>
+            <label>How do they want payment?
+              <select id="payMethod">
+                <option value="">Not discussed yet</option>
+                <option value="bank">Bank transfer with receipt</option>
+                <option value="upi">UPI (GPay, PhonePe, Paytm)</option>
+                <option value="cash">Cash</option>
+                <option value="gift">Gift cards or vouchers</option>
+                <option value="crypto">Crypto</option>
+              </select>
+            </label>
+          </div>
+          <div class="q v-q" data-q="payBeforeVisit">
+            <span>Asked to pay before you visit?</span>
+            <div class="seg seg3">
+              <button type="button" data-v="yes">Yes</button>
+              <button type="button" data-v="no">No</button>
+              <button type="button" data-v="" class="on">Not sure</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>3</span>Check the photos</legend>
+          <label class="drop" id="drop">
+            <input id="photos" type="file" accept="image/*" multiple>
+            <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="14" r="2.5" fill="currentColor"/><path d="m6 23 7-6 5 4 4-3 6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span><strong>Upload listing photos</strong>We compare them with photos from reported listings.</span>
+          </label>
+          <ul class="thumbs" id="thumbs"></ul>
+        </fieldset>
+
+        <button type="submit" class="btn btn-solid v-submit">Check this listing</button>
+      </form>
+
+      <!-- ============ Report ============ -->
+      <aside class="v-report card" aria-live="polite">
+        <div class="v-empty" id="vEmpty">
+          <div class="v-empty-ring"><span>?</span></div>
+          <h2>Your trust report will appear here</h2>
+          <p>Start with an example above if you don't have a listing handy.</p>
+        </div>
+
+        <div id="vReport" hidden>
+          <div class="v-top">
+            <div class="score-ring" id="ring" style="--p:0"><span id="scoreNum">0</span><small>/100</small></div>
+            <div class="verdict">
+              <strong id="verdictTitle"></strong>
+              <p id="verdictText"></p>
+            </div>
+          </div>
+
+          <h3 class="v-sub">Trust checks</h3>
+          <ul class="checks" id="checks"></ul>
+
+          <h3 class="v-sub">Why</h3>
+          <ul class="flags" id="flags"></ul>
+
+          <h3 class="v-sub">What to do next</h3>
+          <ol class="next" id="next"></ol>
+
+          <div class="v-actions">
+            <button type="button" class="btn btn-outline" id="reportBtn">Report this listing</button>
+            <button type="button" class="btn btn-solid" id="copyBtn">Copy report</button>
+          </div>
+          <p class="v-note" id="reportNote" hidden></p>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      <a class="logo small" href="index.html">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <p>Paid a scammer? Call 1930 or report at cybercrime.gov.in.</p>
+    </footer>
+  </div>
+
+  <script src="scanner.js"></script>
+  <script src="verify.js"></script>
+</body>
+</html>

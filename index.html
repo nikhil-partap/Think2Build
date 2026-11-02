@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrustNest · Your safe nest, away from home</title>
+  <meta name="description" content="Verified rooms, honest reviews and flatmates who fit. TrustNest helps students rent safely.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <a class="logo" href="#" aria-label="TrustNest home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <nav class="links" aria-label="Main">
+        <a href="verify.html">Verify listings</a>
+        <a href="#choose">StayScores</a>
+        <a href="#live">Find flatmates</a>
+        <a href="#protect">Protect</a>
+      </nav>
+      <a class="btn btn-solid" href="verify.html">Get started</a>
+    </header>
+
+    <main class="hero">
+      <div class="hero-copy">
+        <h1>Your safe nest,<br>away from home.</h1>
+        <p class="lede">Verified rooms, honest reviews and flatmates who fit.</p>
+
+        <form class="search" role="search" onsubmit="event.preventDefault()">
+          <label class="sr-only" for="q">Search near your campus</label>
+          <input id="q" type="search" placeholder="Search near your campus" autocomplete="off">
+          <button type="submit" aria-label="Search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+
+        <a class="btn btn-outline" href="verify.html">Scan a listing</a>
+      </div>
+
+      <figure class="hero-visual">
+        <div class="arch">
+          <img src="assets/hero-room.jpg" alt="A student smiling on her bed with a laptop in a bright, plant-filled room">
+        </div>
+        <figcaption class="badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#2E7D4F"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><strong>Verified owner</strong>StayScore 8.7</span>
+        </figcaption>
+      </figure>
+    </main>
+
+    <section class="features" aria-label="What TrustNest does">
+      <a class="feature" href="#verify">
+        <span class="icon">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="14" cy="14" r="8" fill="#E8F2EA" stroke="#2E7D4F" stroke-width="2.4"/><path d="m10.5 14 2.5 2.5 4.5-5" fill="none" stroke="#2E7D4F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="m20 20 6 6" stroke="#B5703A" stroke-width="3.2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="text"><strong>Verify</strong>Catch scam listings early.</span>
+      </a>
+      <a class="feature" href="#choose">
+        <span class="icon">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="17" width="5" height="9" rx="1.5" fill="#9DC3A8"/><rect x="13.5" y="11" width="5" height="15" rx="1.5" fill="#4E9A69"/><rect x="22" y="6" width="5" height="20" rx="1.5" fill="#2E7D4F"/></svg>
+        </span>
+        <span class="text"><strong>Choose</strong>Real scores for every room.</span>
+      </a>
+      <a class="feature" href="#live">
+        <span class="icon">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="11" cy="12" r="4" fill="#E2A07A"/><circle cx="21" cy="12" r="4" fill="#6FA585"/><path d="M4 26c0-4 3-7 7-7s7 3 7 7Z" fill="#E2A07A"/><path d="M14 26c0-4 3-7 7-7s7 3 7 7Z" fill="#6FA585"/><path d="M16 5.5c1-1.6 3.6-1 3.2 1-.3 1.4-3.2 3-3.2 3s-2.9-1.6-3.2-3c-.4-2 2.2-2.6 3.2-1Z" fill="#D9534F"/></svg>
+        </span>
+        <span class="text"><strong>Live</strong>Find flatmates who fit.</span>
+      </a>
+      <a class="feature" href="#protect">
+        <span class="icon">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 26 8v7c0 6.5-4.2 11-10 13C10.2 26 6 21.5 6 15V8Z" fill="#E9A07F"/><path d="m11.5 15.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="text"><strong>Protect</strong>Win deposit disputes.</span>
+      </a>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section class="section story" id="story">
+      <div class="section-head center">
+        <h2>Riya's first year away from home.</h2>
+        <p>Every student who moves for college runs into the same four problems. TrustNest has an answer for each one.</p>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span class="when">Day 1</span>
+          <h3>A ₹4,500 flat on WhatsApp</h3>
+          <p>The "owner" is posted in the army and wants a ₹2,000 token on GPay before any visit.</p>
+          <a href="#verify" class="chapter-link">TrustNest flags it as a scam</a>
+        </li>
+        <li>
+          <span class="when">Day 3</span>
+          <h3>Three PGs, same photos</h3>
+          <p>They all look bright and clean online. Only one of them has water after 8 pm.</p>
+          <a href="#choose" class="chapter-link">StayScore shows which one</a>
+        </li>
+        <li>
+          <span class="when">Month 4</span>
+          <h3>Her flatmate leaves</h3>
+          <p>An internship in Bengaluru. Riya and Kavya now split the full rent between two.</p>
+          <a href="#live" class="chapter-link">A new match in two days</a>
+        </li>
+        <li>
+          <span class="when">Month 11</span>
+          <h3>The deposit goes missing</h3>
+          <p>The landlord blames "wall damage" and keeps ₹12,000 of her deposit.</p>
+          <a href="#protect" class="chapter-link">Her evidence gets it back</a>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ VERIFY ============ -->
+    <section class="section split" id="verify">
+      <div class="section-head">
+        <span class="step">Verify</span>
+        <h2>Paste the listing before you pay the token.</h2>
+        <p>Our scanner reads a rental message the way a careful senior would: the price for that area, who is asking for money, and when.</p>
+        <ul class="ticks">
+          <li>Rent compared with the real area average</li>
+          <li>Advance-before-visit and "owner is away" scripts</li>
+          <li>Phone numbers other students have reported</li>
+        </ul>
+      </div>
+
+      <div class="scanner card">
+        <div class="presets" role="group" aria-label="Try an example">
+          <span>Try:</span>
+          <button type="button" data-preset="army">Army officer scam</button>
+          <button type="button" data-preset="cheap">Too-cheap flat</button>
+          <button type="button" data-preset="genuine">Genuine PG</button>
+        </div>
+        <label class="sr-only" for="listing">Listing text</label>
+        <textarea id="listing" rows="6" placeholder="Paste a WhatsApp message, OLX ad or Instagram post here"></textarea>
+        <div class="scan-row">
+          <label class="sr-only" for="area">Area</label>
+          <select id="area">
+            <option value="rajpura">Rajpura / Chitkara</option>
+            <option value="zirakpur">Zirakpur</option>
+            <option value="mohali">Mohali</option>
+            <option value="chandigarh">Chandigarh</option>
+          </select>
+          <button type="button" class="btn btn-solid" id="scanBtn">Scan listing</button>
+        </div>
+
+        <div class="result" id="result" hidden>
+          <div class="score-ring" id="ring" style="--p:0">
+            <span id="scoreNum">0</span><small>/100</small>
+          </div>
+          <div class="verdict">
+            <strong id="verdictTitle"></strong>
+            <p id="verdictText"></p>
+          </div>
+          <ul class="flags" id="flags"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CHOOSE ============ -->
+    <section class="section" id="choose">
+      <div class="section-head center">
+        <span class="step">Choose</span>
+        <h2>Photos show the room. StayScore shows the stay.</h2>
+        <p>Residents rate the things listings never mention, so you can compare rooms on what it's actually like to live there.</p>
+      </div>
+
+      <div class="stays">
+        <article class="stay card">
+          <img src="assets/room-1.jpg" alt="Bright single room with a wooden desk and bed">
+          <div class="stay-body">
+            <div class="stay-top">
+              <div>
+                <h3>Sunrise Girls PG</h3>
+                <p class="where">Chitkara Road, Rajpura · 6 min walk</p>
+              </div>
+              <span class="pill good">8.7</span>
+            </div>
+            <p class="price">₹9,500<span>/month with meals</span></p>
+            <dl class="bars">
+              <div><dt>Water</dt><dd><i style="--v:92%"></i></dd></div>
+              <div><dt>WiFi</dt><dd><i style="--v:78%"></i></dd></div>
+              <div><dt>Quiet</dt><dd><i style="--v:85%"></i></dd></div>
+              <div><dt>Upkeep</dt><dd><i style="--v:88%"></i></dd></div>
+            </dl>
+            <p class="reality ok">Ad said 100 Mbps · residents measured 82 Mbps</p>
+          </div>
+        </article>
+
+        <article class="stay card">
+          <img src="assets/room-2.jpg" alt="Single room with a desk, plant and patterned bedspread">
+          <div class="stay-body">
+            <div class="stay-top">
+              <div>
+                <h3>Greenview Residency</h3>
+                <p class="where">Banur · 12 min by bus</p>
+              </div>
+              <span class="pill mid">6.4</span>
+            </div>
+            <p class="price">₹7,800<span>/month with meals</span></p>
+            <dl class="bars">
+              <div><dt>Water</dt><dd><i style="--v:48%" class="low"></i></dd></div>
+              <div><dt>WiFi</dt><dd><i style="--v:70%"></i></dd></div>
+              <div><dt>Quiet</dt><dd><i style="--v:66%"></i></dd></div>
+              <div><dt>Upkeep</dt><dd><i style="--v:72%"></i></dd></div>
+            </dl>
+            <p class="reality warn">Ad said 24×7 water · no water after 8 pm, 3 nights a week</p>
+          </div>
+        </article>
+
+        <article class="stay card">
+          <img src="assets/room-3.jpg" alt="Room with a desk, lamp and a striped rug">
+          <div class="stay-body">
+            <div class="stay-top">
+              <div>
+                <h3>Shared 2BHK, VIP Road</h3>
+                <p class="where">Zirakpur · 1 bed free in a 3-share</p>
+              </div>
+              <span class="pill good">8.1</span>
+            </div>
+            <p class="price">₹6,500<span>/month per person</span></p>
+            <dl class="bars">
+              <div><dt>Water</dt><dd><i style="--v:86%"></i></dd></div>
+              <div><dt>WiFi</dt><dd><i style="--v:90%"></i></dd></div>
+              <div><dt>Quiet</dt><dd><i style="--v:58%" class="low"></i></dd></div>
+              <div><dt>Upkeep</dt><dd><i style="--v:80%"></i></dd></div>
+            </dl>
+            <p class="reality warn">Ad said "peaceful" · main road traffic until midnight</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ LIVE ============ -->
+    <section class="section split reverse" id="live">
+      <div class="section-head">
+        <span class="step">Live</span>
+        <h2>When a flatmate leaves, fill the bed with someone who fits.</h2>
+        <p>Tell us how you live. We match you with households looking for a replacement, then handle the landlord approval and deposit handover.</p>
+        <div class="empty-bed card">
+          <p>An empty bed in a ₹18,000 flat of three costs each of you</p>
+          <strong>₹3,000 extra every month</strong>
+          <span>That's ₹100 a day, until someone moves in.</span>
+        </div>
+      </div>
+
+      <div class="matcher card">
+        <h3>How do you live?</h3>
+        <div class="q" data-q="sleep">
+          <span>Sleep</span>
+          <div class="seg"><button type="button" data-v="0" class="on">Early bird</button><button type="button" data-v="1">Night owl</button></div>
+        </div>
+        <div class="q" data-q="clean">
+          <span>Cleaning</span>
+          <div class="seg"><button type="button" data-v="0">Relaxed</button><button type="button" data-v="1" class="on">Very tidy</button></div>
+        </div>
+        <div class="q" data-q="food">
+          <span>Food</span>
+          <div class="seg"><button type="button" data-v="0" class="on">Veg</button><button type="button" data-v="1">Non-veg is fine</button></div>
+        </div>
+        <div class="q" data-q="guests">
+          <span>Guests</span>
+          <div class="seg"><button type="button" data-v="0" class="on">Rarely</button><button type="button" data-v="1">Often</button></div>
+        </div>
+
+        <ul class="matches" id="matches"></ul>
+      </div>
+    </section>
+
+    <!-- ============ PROTECT ============ -->
+    <section class="section split" id="protect">
+      <div class="section-head">
+        <span class="step">Protect</span>
+        <h2>Keep proof from day one. Get your deposit back.</h2>
+        <p>Log move-in photos, complaints and payments as they happen. If things go wrong, TrustNest turns them into a dated record and a formal letter in one tap.</p>
+        <p class="help">Paid a scammer? Call <strong>1930</strong> or report at cybercrime.gov.in. PG service issues: National Consumer Helpline <strong>1915</strong>.</p>
+      </div>
+
+      <div class="locker card">
+        <h3>Riya's evidence locker</h3>
+        <ol class="log">
+          <li><time>12 Jul</time><span><strong>Move-in photos</strong>14 photos of walls, fan and bathroom</span></li>
+          <li><time>03 Sep</time><span><strong>Complaint: water</strong>WhatsApp to owner, no reply for 6 days</span></li>
+          <li><time>01 Jun</time><span><strong>Move-out photos</strong>Same walls, same condition</span></li>
+          <li class="alert"><time>10 Jun</time><span><strong>₹12,000 deducted</strong>"Wall damage", no bill given</span></li>
+        </ol>
+        <div class="letter">
+          <p>To Mr. R. Sharma,<br>Subject: Refund of security deposit for Room 3, Sunrise PG.</p>
+          <p>I vacated on 1 June after a month's notice. My move-in and move-out photos, both dated, show the walls in the same condition…</p>
+        </div>
+        <button type="button" class="btn btn-solid" id="letterBtn">Generate my letter</button>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta">
+      <h2>Before you pay the token,<br>check it on TrustNest.</h2>
+      <p>Free for students. Takes ten seconds.</p>
+      <a class="btn btn-light" href="verify.html">Scan a listing</a>
+    </section>
+
+    <footer class="footer">
+      <a class="logo small" href="#">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <p>Built at Think2Build 2026 for students renting near campus.</p>
+    </footer>
+  </div>
+  <script src="scanner.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
