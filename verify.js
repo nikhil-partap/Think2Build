@@ -138,7 +138,16 @@ function runCheck() {
   last = { ...res, text, area };
   $("printDate").textContent = new Date().toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
   $("printQuote").textContent = text.length > 280 ? text.slice(0, 280) + "…" : text;
-  render(res);
+  // a quick scan sweep over the listing before the report lands (motion.js pages only)
+  const box = listing.closest("fieldset");
+  if (box && document.documentElement.classList.contains("js-motion")) {
+    box.style.setProperty("--scan-h", box.offsetHeight + "px");
+    box.classList.remove("scanning"); void box.offsetWidth; box.classList.add("scanning");
+    clearTimeout(window.__scanTimer);
+    window.__scanTimer = setTimeout(() => { box.classList.remove("scanning"); render(res); }, 650);
+  } else {
+    render(res);
+  }
   if (window.matchMedia("(max-width: 1024px)").matches) $("vReport").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -207,7 +216,7 @@ function render({ score, flags, checks }) {
   }[level];
   const nx = $("next");
   nx.innerHTML = "";
-  NEXT.forEach(n => { const li = document.createElement("li"); li.textContent = n; nx.append(li); });
+  NEXT.forEach((n, i) => { const li = document.createElement("li"); li.textContent = n; li.style.setProperty("--n", i); nx.append(li); });
 
   animateScore(score);
 }

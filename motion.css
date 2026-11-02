@@ -1,0 +1,176 @@
+/* TrustNest motion layer. Linked on inner pages only (not the homepage).
+   All motion is gated by .js-motion (added by motion.js), so pages stay fully
+   visible without JavaScript, and nothing moves for reduced-motion visitors. */
+
+:root {
+  --ease-out: cubic-bezier(.16, 1, .3, 1);      /* soft, long settle */
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1); /* small overshoot */
+}
+
+/* ---------- Sticky frosted nav ---------- */
+.page > .nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin: -28px -24px 0;
+  padding: 18px 24px;
+  border-radius: 0 0 22px 22px;
+  transition: background .35s var(--ease-out), box-shadow .35s var(--ease-out), padding .35s var(--ease-out), backdrop-filter .35s;
+}
+.page > .nav.nav-scrolled {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: rgba(220, 230, 222, 0.72);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 12px 30px -22px rgba(22, 38, 29, 0.55);
+}
+@media (max-width: 1024px) {
+  .page > .nav { margin-top: -24px; }
+}
+@media (max-width: 760px) {
+  .page > .nav { margin: -18px -16px 0; padding: 14px 16px; }
+}
+
+/* ---------- Page enter / leave ---------- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: tn-fade-out .22s ease both; }
+::view-transition-new(root) { animation: tn-fade-in .38s var(--ease-out) both; }
+
+.js-motion.page-out body { opacity: 0; transform: translateY(-4px); transition: opacity .2s ease, transform .2s ease; }
+
+@keyframes tn-fade-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes tn-fade-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- Headline words rise from a mask ---------- */
+.tn-split .w-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.js-motion .tn-split .w {
+  display: inline-block;
+  transform: translateY(105%) rotate(2deg);
+  opacity: 0;
+  transition: transform .9s var(--ease-out), opacity .6s ease;
+  transition-delay: calc(120ms + var(--i) * 55ms);
+}
+.js-motion.page-in .tn-split .w { transform: none; opacity: 1; }
+
+/* ---------- Scroll reveal ---------- */
+.js-motion .rv {
+  opacity: 0;
+  transform: translateY(26px) scale(.985);
+  transition: opacity .7s var(--ease-out), transform .9s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.js-motion .rv.in { opacity: 1; transform: none; }
+/* after the entrance, hand transforms back to hover effects */
+.js-motion .rv.in.settled { transition-delay: 0ms; }
+
+/* ---------- Bars fill when their card appears ---------- */
+.js-motion .rv dd > i,
+.js-motion .rv dd > span:not(.ch-bar-num) {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.1s var(--ease-out);
+  transition-delay: calc(var(--d, 0ms) + 250ms);
+}
+.js-motion .rv.in dd > i,
+.js-motion .rv.in dd > span:not(.ch-bar-num) { transform: scaleX(1); }
+
+/* ---------- Living surfaces: cards lift, images breathe ---------- */
+.card, .ch-card, .stay, .feature, .lv-hh-card {
+  transition-property: opacity, transform, box-shadow, background, border-color;
+  transition-duration: .7s, .5s, .5s, .3s, .3s;
+  transition-timing-function: var(--ease-out);
+}
+.ch-card:hover, .lv-hh-card:hover, .v-feed-list li:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 34px 60px -34px rgba(22, 38, 29, 0.5);
+}
+.ch-card img, .lv-hh-card img, .stay img { transition: transform 1.2s var(--ease-out); }
+.ch-card:hover img, .lv-hh-card:hover img, .stay:hover img { transform: scale(1.06); }
+
+/* ---------- Buttons: soft lift, press, ripple ---------- */
+.btn { position: relative; overflow: hidden; isolation: isolate; transition: background .25s, color .25s, transform .35s var(--ease-spring), box-shadow .35s var(--ease-out); }
+.btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 24px -14px rgba(22, 38, 29, 0.6); }
+.btn:active:not(:disabled) { transform: translateY(0) scale(.97); transition-duration: .08s; }
+.ripple {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .18;
+  transform: scale(0);
+  pointer-events: none;
+  animation: tn-ripple .65s var(--ease-out) forwards;
+}
+@keyframes tn-ripple { to { transform: scale(1); opacity: 0; } }
+
+/* chips, presets, segmented controls and tabs feel tactile */
+.presets button, .seg button, .pr-tab, .lv-tab, .lv-option-btn, .ch-compare-btn {
+  transition: background .25s, color .25s, box-shadow .3s var(--ease-out), transform .3s var(--ease-spring);
+}
+.presets button:active, .seg button:active, .pr-tab:active, .lv-tab:active, .lv-option-btn:active { transform: scale(.95); }
+.lv-option-btn:hover { transform: translateX(4px); }
+
+/* nav links: underline sweeps in */
+.links a { position: relative; border-bottom-color: transparent !important; }
+.links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px;
+  background: var(--forest); transform: scaleX(0); transform-origin: right;
+  transition: transform .45s var(--ease-out);
+}
+.links a:hover::after, .links a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---------- Verify: the scanner feels alive ---------- */
+.v-report { transition: box-shadow .5s var(--ease-out); }
+.v-empty-ring { animation: tn-breathe 3.2s ease-in-out infinite; }
+@keyframes tn-breathe { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 125, 79, 0); } 50% { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(46, 125, 79, .07); } }
+
+.scanning { position: relative; }
+.scanning::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 64px; pointer-events: none;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(46, 125, 79, 0), rgba(46, 125, 79, .18) 80%, rgba(46, 125, 79, .55));
+  border-bottom: 2px solid #2E7D4F;
+  animation: tn-scan .7s var(--ease-out) forwards;
+}
+@keyframes tn-scan { from { transform: translateY(-64px); opacity: 0; } 15% { opacity: 1; } to { transform: translateY(var(--scan-h, 160px)); opacity: 0; } }
+
+.js-motion .score-ring { animation: tn-pop .7s var(--ease-spring) both; }
+.js-motion .checks li { animation: tn-rise .5s var(--ease-out) both; }
+.js-motion .checks li:nth-child(2) { animation-delay: 60ms; }
+.js-motion .checks li:nth-child(3) { animation-delay: 120ms; }
+.js-motion .checks li:nth-child(4) { animation-delay: 180ms; }
+.js-motion .checks li:nth-child(5) { animation-delay: 240ms; }
+.js-motion .checks li:nth-child(6) { animation-delay: 300ms; }
+.js-motion .checks li.fail i { animation: tn-shake .5s .4s ease both; }
+.js-motion .next li { animation: tn-rise .5s var(--ease-out) both; animation-delay: calc(350ms + var(--n, 0) * 70ms); }
+.thumbs li { animation: tn-pop .45s var(--ease-spring) both; }
+.v-feed-list li.mine { animation: tn-glow 2.4s ease 1; }
+
+@keyframes tn-pop { from { opacity: 0; transform: scale(.85); } }
+@keyframes tn-rise { from { opacity: 0; transform: translateY(10px); } }
+@keyframes tn-shake { 0%, 100% { transform: none; } 25% { transform: translateX(-3px) rotate(-6deg); } 50% { transform: translateX(3px) rotate(6deg); } 75% { transform: translateX(-2px); } }
+@keyframes tn-glow { 0% { box-shadow: 0 0 0 0 rgba(46, 125, 79, .5); } 70% { box-shadow: 0 0 0 16px rgba(46, 125, 79, 0); } }
+
+/* ---------- Sign-in dialog and lightbox glide in ---------- */
+.signin[open], .pr-lightbox[open] { animation: tn-dialog .45s var(--ease-out) both; }
+.signin[open]::backdrop, .pr-lightbox[open]::backdrop { animation: tn-fade .3s ease both; }
+.nav-menu:not([hidden]) { animation: tn-drop .3s var(--ease-out) both; transform-origin: top right; }
+@keyframes tn-dialog { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+@keyframes tn-fade { from { opacity: 0; } }
+@keyframes tn-drop { from { opacity: 0; transform: translateY(-6px) scale(.97); } }
+
+/* ---------- Tab panels cross-fade (Protect, Flatmates) ---------- */
+.pr-panel-active, .lv-panel:not([hidden]) { animation: tn-panel .5s var(--ease-out) both; }
+@keyframes tn-panel { from { opacity: 0; transform: translateY(10px); } }
+
+/* new timeline entries, letters and tracker steps */
+.pr-letter-content:not([hidden]) { animation: tn-paper .7s var(--ease-out) both; }
+@keyframes tn-paper { from { opacity: 0; transform: translateY(18px) rotate(-.6deg); } }
+.pr-steps li.done::before { animation: tn-fill .6s var(--ease-out) both; transform-origin: left; }
+@keyframes tn-fill { from { transform: scaleX(0); } }
+
+/* ---------- Reduced motion: everything calm ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
