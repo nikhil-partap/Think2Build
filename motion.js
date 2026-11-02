@@ -121,7 +121,7 @@
   }).observe(document.body, { childList: true, subtree: true });
 
   /* ---------- Numbers count up ---------- */
-  var COUNT = ".pill, .empty-bed strong, .pr-summary-item strong, .ch-score-badge, .ch-big-score, .pct strong";
+  var COUNT = ".trust-item strong, .pill, .empty-bed strong, .pr-summary-item strong, .ch-score-badge, .ch-big-score, .pct strong";
   function countUp(scope, onlyVisible) {
     var els = [];
     if (scope.matches && scope.matches(COUNT)) els.push(scope);
