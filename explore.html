@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find a room you can trust · TrustNest</title>
+  <meta name="description" content="Compare PGs and flats near Chitkara University by real living conditions — water, WiFi, noise, maintenance and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="choose.css">
+</head>
+<body>
+  <div class="page">
+
+    <header class="nav">
+      <a class="logo" href="index.html" aria-label="TrustNest home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <nav class="links" aria-label="Main">
+        <a href="verify.html">Verify listings</a>
+        <a href="explore.html" aria-current="page">StayScores</a>
+        <a href="flatmates.html">Find flatmates</a>
+        <a href="protect.html">Protect</a>
+      </nav>
+      <a class="btn btn-solid" href="index.html">Home</a>
+    </header>
+
+    <div class="ch-head">
+      <div class="step">StayScore by TrustNest</div>
+      <h1>Find a room you can trust.</h1>
+      <p>Photos show the room. StayScore shows the stay. Compare PGs and flats by what residents actually experienced — water, WiFi, noise, maintenance and more.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="card ch-filters" role="search" aria-label="Filter listings">
+      <div class="ch-filter-group">
+        <label for="ch-area">Area</label>
+        <select id="ch-area">
+          <option value="">All areas</option>
+          <option value="Rajpura">Rajpura</option>
+          <option value="Banur">Banur</option>
+          <option value="Zirakpur">Zirakpur</option>
+          <option value="Mohali">Mohali</option>
+          <option value="Chandigarh">Chandigarh</option>
+        </select>
+      </div>
+
+      <div class="ch-filter-group">
+        <label for="ch-type">Type</label>
+        <select id="ch-type">
+          <option value="">All types</option>
+          <option value="PG">PG</option>
+          <option value="Single room">Single room</option>
+          <option value="Shared flat">Shared flat</option>
+          <option value="1BHK">1BHK</option>
+          <option value="2BHK">2BHK</option>
+        </select>
+      </div>
+
+      <div class="ch-filter-group">
+        <label for="ch-gender">For</label>
+        <select id="ch-gender">
+          <option value="">Any gender</option>
+          <option value="Girls">Girls</option>
+          <option value="Boys">Boys</option>
+          <option value="Any">Co-ed / Any</option>
+        </select>
+      </div>
+
+      <div class="ch-budget-wrap">
+        <label for="ch-budget">Max budget: <strong class="ch-budget-val" id="ch-budget-val">₹15,000</strong></label>
+        <input type="range" id="ch-budget" min="3000" max="20000" step="500" value="15000" aria-label="Maximum monthly budget">
+      </div>
+
+      <label class="ch-verified-wrap">
+        <input type="checkbox" id="ch-verified" aria-label="Verified owner only">
+        Verified owner only
+      </label>
+    </div>
+
+    <!-- Sort + count bar -->
+    <div class="ch-bar">
+      <p class="ch-count" id="ch-count" aria-live="polite"><strong>12</strong> rooms</p>
+      <div class="ch-sort">
+        <label for="ch-sort-sel">Sort by</label>
+        <select id="ch-sort-sel">
+          <option value="score">StayScore</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="distance">Distance to Chitkara</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Listing grid -->
+    <main id="ch-grid" class="ch-grid" aria-label="Listings">
+      <!-- Cards rendered by choose.js -->
+    </main>
+
+    <!-- Compare tray -->
+    <div class="ch-compare-tray" id="ch-tray" role="region" aria-label="Compare tray" aria-hidden="true">
+      <div class="ch-tray-items" id="ch-tray-items">
+        <span class="ch-tray-label">Compare:</span>
+      </div>
+      <div class="ch-tray-actions">
+        <button class="btn ch-tray-clear" id="ch-tray-clear">Clear</button>
+        <button class="btn btn-light ch-tray-actions" id="ch-compare-open">Compare rooms</button>
+      </div>
+    </div>
+
+    <!-- Compare modal -->
+    <div class="ch-compare-modal" id="ch-compare-modal" hidden role="dialog" aria-modal="true" aria-labelledby="ch-modal-title">
+      <div class="ch-modal-backdrop" id="ch-modal-backdrop"></div>
+      <div class="ch-modal-inner">
+        <div class="ch-modal-header">
+          <h2 id="ch-modal-title">Side-by-side comparison</h2>
+          <button class="ch-modal-close" id="ch-modal-close" aria-label="Close comparison">&times;</button>
+        </div>
+        <div class="ch-modal-body">
+          <div id="ch-compare-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <a class="logo small" href="index.html">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <p>Paid a scammer? Call 1930 or report at cybercrime.gov.in.</p>
+    </footer>
+
+  </div><!-- .page -->
+
+  <script src="choose-data.js"></script>
+  <script src="choose.js"></script>
+</body>
+</html>

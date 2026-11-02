@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find flatmates · TrustNest</title>
+  <meta name="description" content="When a flatmate leaves, fill the bed with someone who fits. Vibe quiz, compatibility matching and handover tracker.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="live.css">
+</head>
+<body>
+  <div class="page">
+
+    <header class="nav">
+      <a class="logo" href="index.html" aria-label="TrustNest home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <nav class="links" aria-label="Main">
+        <a href="verify.html">Verify listings</a>
+        <a href="explore.html">StayScores</a>
+        <a href="flatmates.html" aria-current="page">Find flatmates</a>
+        <a href="protect.html">Protect</a>
+      </nav>
+      <a class="btn btn-solid" href="index.html">Home</a>
+    </header>
+
+    <div class="lv-head">
+      <div class="step">Live by TrustNest</div>
+      <h1>When a flatmate leaves, fill the bed with someone who fits.</h1>
+      <p>Internship, placement, or going home — someone always leaves suddenly. TrustNest finds a compatible replacement and handles the handover so the rest of you don't pay extra.</p>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="lv-tabs" role="tablist" aria-label="Flatmates sections">
+      <button class="lv-tab lv-tab-active" role="tab" aria-selected="true" aria-controls="lv-find" id="tab-find">Find a room</button>
+      <button class="lv-tab" role="tab" aria-selected="false" aria-controls="lv-post" id="tab-post">Post a vacancy</button>
+      <button class="lv-tab" role="tab" aria-selected="false" aria-controls="lv-handover" id="tab-handover">Handover</button>
+    </div>
+
+    <!-- ══ FIND A ROOM ══ -->
+    <div class="lv-panel lv-panel-active" id="lv-find" role="tabpanel" aria-labelledby="tab-find">
+      <!-- Vibe quiz (shown until answered) -->
+      <div id="lv-quiz-section">
+        <div class="lv-quiz-wrap">
+          <div class="lv-quiz-header">
+            <h2>Find your vibe match</h2>
+            <p>Answer 8 quick questions and we'll rank households by how well you'll get along.</p>
+          </div>
+          <p class="lv-progress-label" id="lv-progress-label">Question 1 of 8</p>
+          <div class="lv-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="1" id="lv-progress-bar">
+            <div class="lv-progress-fill" id="lv-progress-fill" style="width:12.5%"></div>
+          </div>
+          <div class="lv-question-card card" id="lv-question-card">
+            <!-- rendered by live.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Matching results (shown after quiz) -->
+      <div id="lv-results-section" hidden>
+        <div class="lv-results-header">
+          <h2 id="lv-results-title">Your matches</h2>
+          <p id="lv-results-sub">Based on your answers, here are households ranked by compatibility.</p>
+          <button class="btn btn-outline" id="lv-retake-btn">Retake quiz</button>
+        </div>
+        <div class="lv-household-grid" id="lv-household-grid">
+          <!-- rendered by live.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ POST A VACANCY ══ -->
+    <div class="lv-panel" id="lv-post" role="tabpanel" aria-labelledby="tab-post">
+      <div class="lv-post-grid">
+        <form class="lv-post-form card" id="lv-vacancy-form" novalidate>
+          <h2>Post a vacancy</h2>
+          <div class="lv-form-grid">
+            <div class="lv-form-field">
+              <label for="lv-area">Area</label>
+              <select id="lv-area">
+                <option value="">Select area</option>
+                <option value="Rajpura">Rajpura</option>
+                <option value="Banur">Banur</option>
+                <option value="Zirakpur">Zirakpur</option>
+                <option value="Mohali">Mohali</option>
+                <option value="Chandigarh">Chandigarh</option>
+              </select>
+            </div>
+            <div class="lv-form-field">
+              <label for="lv-flat-type">Flat type</label>
+              <select id="lv-flat-type">
+                <option value="">Select type</option>
+                <option value="Shared flat">Shared flat</option>
+                <option value="1BHK">1BHK</option>
+                <option value="2BHK">2BHK</option>
+                <option value="3BHK">3BHK</option>
+                <option value="PG">PG</option>
+              </select>
+            </div>
+            <div class="lv-form-field">
+              <label for="lv-total-rent">Total rent (₹/month)</label>
+              <input type="number" id="lv-total-rent" placeholder="e.g. 18000" min="1000">
+            </div>
+            <div class="lv-form-field">
+              <label for="lv-num-people">Total people in flat</label>
+              <input type="number" id="lv-num-people" placeholder="e.g. 3" min="2" max="10">
+            </div>
+            <div class="lv-form-field">
+              <label for="lv-leaving-name">Who is leaving?</label>
+              <input type="text" id="lv-leaving-name" placeholder="Name">
+            </div>
+            <div class="lv-form-field">
+              <label for="lv-leaving-date">Leaving on</label>
+              <input type="date" id="lv-leaving-date">
+            </div>
+            <div class="lv-form-field lv-full">
+              <label for="lv-leaving-reason">Reason for leaving</label>
+              <input type="text" id="lv-leaving-reason" placeholder="e.g. Internship in Bengaluru">
+            </div>
+            <div class="lv-form-field lv-full">
+              <label for="lv-house-rules">House rules (one per line)</label>
+              <textarea id="lv-house-rules" rows="3" placeholder="No smoking&#10;Clean kitchen after cooking&#10;Quiet after 11 pm"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-solid">Post vacancy</button>
+          <p class="lv-post-success" id="lv-post-success" hidden>Vacancy posted! It will appear in "Find a room" with a New badge.</p>
+        </form>
+
+        <!-- Rent calculator -->
+        <div class="lv-calc card">
+          <h2>Rent calculator</h2>
+          <p>See what an empty bed costs everyone, in real time.</p>
+          <div class="lv-calc-fields">
+            <div class="lv-calc-field">
+              <label for="lv-calc-rent">Total rent (₹/month)</label>
+              <input type="number" id="lv-calc-rent" placeholder="18000" value="18000" min="1000">
+            </div>
+            <div class="lv-calc-field">
+              <label for="lv-calc-people">People in flat</label>
+              <input type="number" id="lv-calc-people" placeholder="3" value="3" min="2" max="10">
+            </div>
+            <div class="lv-calc-field">
+              <label for="lv-calc-days">Days until bed is filled</label>
+              <input type="number" id="lv-calc-days" placeholder="30" value="30" min="1" max="365">
+            </div>
+          </div>
+          <div class="lv-calc-results">
+            <dl>
+              <div class="lv-calc-row"><dt>Each person's normal share</dt><dd id="lv-res-normal">₹6,000</dd></div>
+              <div class="lv-calc-row"><dt>Share while bed is empty</dt><dd id="lv-res-empty">₹9,000</dd></div>
+              <div class="lv-calc-row lv-calc-highlight"><dt>Extra cost per person</dt><dd id="lv-res-extra">₹3,000/month</dd></div>
+              <div class="lv-calc-row"><dt>Cost per person per day</dt><dd id="lv-res-day">₹100/day</dd></div>
+              <div class="lv-calc-row lv-calc-total"><dt>Total lost until filled</dt><dd id="lv-res-total">₹6,000</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HANDOVER ══ -->
+    <div class="lv-panel" id="lv-handover" role="tabpanel" aria-labelledby="tab-handover">
+      <div class="lv-handover-grid">
+        <!-- 5-step tracker -->
+        <div class="lv-tracker card">
+          <h2>Handover tracker</h2>
+          <ol class="lv-steps" id="lv-steps-list" aria-label="Handover steps">
+            <!-- rendered by live.js -->
+          </ol>
+        </div>
+
+        <!-- Deposit settlement -->
+        <div class="lv-deposit-calc card">
+          <h2>Deposit settlement</h2>
+          <p>Calculate how the deposit is split between the outgoing and incoming flatmate.</p>
+          <div class="lv-deposit-fields">
+            <div class="lv-deposit-field">
+              <label for="lv-dep-total">Outgoing flatmate's deposit (₹)</label>
+              <input type="number" id="lv-dep-total" placeholder="15000" value="15000" min="0">
+            </div>
+            <div class="lv-deposit-field">
+              <label for="lv-dep-damage">Damage deduction (₹)</label>
+              <input type="number" id="lv-dep-damage" placeholder="0" value="0" min="0">
+            </div>
+            <div class="lv-deposit-field">
+              <label for="lv-dep-electricity">Pending electricity (₹)</label>
+              <input type="number" id="lv-dep-electricity" placeholder="0" value="0" min="0">
+            </div>
+            <div class="lv-deposit-field">
+              <label for="lv-dep-rent">Pending rent (₹)</label>
+              <input type="number" id="lv-dep-rent" placeholder="0" value="0" min="0">
+            </div>
+          </div>
+          <div class="lv-receipt">
+            <h3>Receipt</h3>
+            <dl>
+              <div class="lv-receipt-row"><dt>Original deposit</dt><dd id="lv-rec-orig">₹15,000</dd></div>
+              <div class="lv-receipt-row"><dt>Damage deduction</dt><dd id="lv-rec-damage">₹0</dd></div>
+              <div class="lv-receipt-row"><dt>Pending electricity</dt><dd id="lv-rec-elec">₹0</dd></div>
+              <div class="lv-receipt-row"><dt>Pending rent</dt><dd id="lv-rec-rent">₹0</dd></div>
+              <div class="lv-receipt-row lv-receipt-total"><dt>Refund to outgoing flatmate</dt><dd id="lv-rec-refund">₹15,000</dd></div>
+            </dl>
+            <p style="margin-top:16px;font-size:14px;color:var(--muted);" id="lv-rec-note">The incoming flatmate pays ₹15,000 directly to the landlord as their deposit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Household detail drawer -->
+    <div class="lv-hh-modal" id="lv-hh-modal" hidden role="dialog" aria-modal="true" aria-labelledby="lv-drawer-title">
+      <div class="lv-hh-backdrop" id="lv-hh-backdrop"></div>
+      <div class="lv-hh-drawer" id="lv-hh-drawer">
+        <!-- rendered by live.js -->
+      </div>
+    </div>
+
+    <footer class="footer">
+      <a class="logo small" href="index.html">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <p>Paid a scammer? Call 1930 or report at cybercrime.gov.in.</p>
+    </footer>
+
+  </div><!-- .page -->
+
+  <script src="live-data.js"></script>
+  <script src="live.js"></script>
+</body>
+</html>

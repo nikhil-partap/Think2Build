@@ -1,0 +1,12 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#C6D3C8"/>
+  <rect x="60" y="80" width="680" height="280" rx="12" fill="rgba(255,255,255,0.35)"/>
+  <rect x="60" y="80" width="680" height="180" rx="12" fill="rgba(255,255,255,0.2)"/>
+  <line x1="60" y1="260" x2="740" y2="260" stroke="rgba(30,58,44,0.1)" stroke-width="1"/>
+  <rect x="80" y="100" width="200" height="140" rx="8" fill="rgba(30,58,44,0.08)"/>
+  <rect x="300" y="100" width="120" height="80" rx="8" fill="rgba(30,58,44,0.06)"/>
+  <rect x="440" y="100" width="280" height="140" rx="8" fill="rgba(30,58,44,0.06)"/>
+  <circle cx="130" cy="170" r="30" fill="rgba(30,58,44,0.1)"/>
+  <text x="400" y="340" font-family="Georgia,serif" font-size="28" fill="rgba(30,58,44,0.55)" text-anchor="middle">Spacious Room</text>
+  <text x="400" y="375" font-family="Arial,sans-serif" font-size="16" fill="rgba(30,58,44,0.35)" text-anchor="middle">Rajpura / Chitkara University area</text>
+</svg>
