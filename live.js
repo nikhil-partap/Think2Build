@@ -4,8 +4,13 @@
    localStorage prefix: tn_live_
 */
 
-(function () {
+/* Shared data (vacancies, intro requests, handover progress) is stored with TNDB (db.js),
+   so it syncs with the team through git when the site runs via `node server.js`.
+   The quiz answers (tn_live_profile) stay in this browser on purpose. */
+window.LV_BOOT = function () {
   "use strict";
+  var SHARED = window.LV_SHARED || { vacancies: [], intros: {}, handover: null };
+  function dbSave(fn) { if (window.TNDB) fn().catch(function () { /* keeps working offline */ }); }
 
   /* ── Utils ── */
   function esc(str) {
@@ -31,10 +36,36 @@
 
   /* ── localStorage helpers ── */
   function lsGet(key) {
+    if (key === "tn_live_vacancies") return SHARED.vacancies.slice();
+    if (key === "tn_live_intros") return Object.assign({}, SHARED.intros);
+    if (key === "tn_live_handover") return SHARED.handover ? JSON.parse(JSON.stringify(SHARED.handover)) : null;
     try { return JSON.parse(localStorage.getItem(key) || "null"); }
     catch (e) { return null; }
   }
   function lsSet(key, val) {
+    if (key === "tn_live_vacancies") {
+      // new vacancies are the ones without an id yet: save each as its own record
+      val.forEach(function (v) {
+        if (!v.id) {
+          v.id = Date.now().toString(36) + "-" + Math.random().toString(16).slice(2, 8);
+          dbSave(function () { return TNDB.add("live-vacancies", v); });
+        }
+      });
+      SHARED.vacancies = val.slice();
+      return;
+    }
+    if (key === "tn_live_intros") {
+      Object.keys(val).forEach(function (id) {
+        if (!SHARED.intros[id] && /^[a-z0-9_-]{1,64}$/i.test(id)) dbSave(function () { return TNDB.update("live-intros", id, { sent: true, sentAt: Date.now() }); });
+      });
+      SHARED.intros = Object.assign({}, val);
+      return;
+    }
+    if (key === "tn_live_handover") {
+      SHARED.handover = val;
+      dbSave(function () { return TNDB.update("live-handover", "state", { data: val }); });
+      return;
+    }
     try { localStorage.setItem(key, JSON.stringify(val)); }
     catch (e) { /* storage full */ }
   }
@@ -433,7 +464,7 @@
     {
       title: "Match accepted",
       desc: "Both sides agreed to move forward.",
-      action: null
+      action: { label: "Accept the match", doneLabel: "Match accepted" }
     },
     {
       title: "Landlord approval",
@@ -448,7 +479,7 @@
     {
       title: "Deposit settlement",
       desc: "Outgoing flatmate's deposit is calculated and settled.",
-      action: null
+      action: { label: "Mark deposit settled", doneLabel: "Deposit settled" }
     },
     {
       title: "Key handover",
@@ -572,4 +603,17 @@
   });
   calcDeposit();
 
+};
+
+(function () {
+  var load = window.TNDB
+    ? Promise.all([TNDB.list("live-vacancies"), TNDB.list("live-intros"), TNDB.list("live-handover")])
+    : Promise.resolve([[], [], []]);
+  load.catch(function () { return [[], [], []]; }).then(function (r) {
+    var intros = {};
+    r[1].forEach(function (x) { intros[x.id] = true; });
+    var hand = r[2].filter(function (x) { return x.id === "state"; })[0];
+    window.LV_SHARED = { vacancies: r[0].slice().reverse(), intros: intros, handover: hand ? hand.data : null };
+    window.LV_BOOT();
+  });
 })();

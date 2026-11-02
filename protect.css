@@ -927,3 +927,5 @@
   .pr-filters select { flex: 1; min-width: 0; height: 44px; }
   .pr-header-actions { justify-content: space-between; }
 }
+.pr-grid > * { min-width: 0; }
+@media (max-width: 1024px) { .pr-grid { grid-template-columns: minmax(0, 1fr); } }

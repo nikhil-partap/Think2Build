@@ -812,3 +812,10 @@ html { scroll-behavior: smooth; }
   .nav-chip-btn { padding: 0 6px; height: 42px; }
   .nav-signin { height: 40px; padding: 0 12px; font-size: 15px; }
 }
+
+/* ---------- Links from landing previews to full pages ---------- */
+.more-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-size: 16px; font-weight: 500; color: var(--forest); text-decoration: underline; text-underline-offset: 4px; }
+.more-link::after { content: "→"; text-decoration: none; }
+.more-link:hover { color: var(--forest-ink); }
+.more-row { margin-top: 36px; text-align: center; }
+.more-row .btn { background: transparent; }
