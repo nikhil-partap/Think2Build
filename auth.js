@@ -32,9 +32,11 @@
   }
   function saveSession(sess) {
     localStorage.setItem("tn_auth_session", JSON.stringify(sess));
+    document.dispatchEvent(new CustomEvent("tn:auth", { detail: sess })); /* access.js unlocks features */
   }
   function clearSession() {
     localStorage.removeItem("tn_auth_session");
+    document.dispatchEvent(new CustomEvent("tn:auth", { detail: null }));
   }
   function findAccount(email) {
     return getAccounts().find(function (a) {
