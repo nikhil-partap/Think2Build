@@ -112,13 +112,7 @@
 .lv-option-btn:hover { transform: translateX(4px); }
 
 /* nav links: underline sweeps in */
-.links a { position: relative; border-bottom-color: transparent !important; }
-.links a::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px;
-  background: var(--forest); transform: scaleX(0); transform-origin: right;
-  transition: transform .45s var(--ease-out);
-}
-.links a:hover::after, .links a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+.links a { border-bottom-color: transparent !important; }
 
 /* ---------- Verify: the scanner feels alive ---------- */
 .v-report { transition: box-shadow .5s var(--ease-out); }

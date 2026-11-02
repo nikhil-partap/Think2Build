@@ -1,0 +1,11 @@
+# Local-only files: the site on Vercel is plain static HTML/CSS/JS.
+# (server.js is the git-synced team database for local use; on Vercel the
+#  pages automatically fall back to saving in the visitor's browser.)
+server.js
+start.bat
+start.sh
+package.json
+claude-skills.tgz
+TEAM_TASKS.md
+data/
+.claude/
