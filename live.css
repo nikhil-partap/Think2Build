@@ -1,0 +1,904 @@
+/* live.css — Live / Flatmates feature  (prefix: lv-)  */
+
+/* ── Page header ── */
+.lv-head {
+  padding: 64px 0 44px;
+  max-width: 820px;
+}
+.lv-head h1 {
+  font-size: clamp(40px, 4.6vw, 62px);
+}
+.lv-head p {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+/* ── Tab bar ── */
+.lv-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  width: fit-content;
+  margin-bottom: 36px;
+}
+.lv-tab {
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.lv-tab:hover {
+  color: var(--forest-ink);
+}
+.lv-tab.lv-tab-active {
+  background: var(--forest);
+  color: #fff;
+}
+
+/* ── Tab panels ── */
+.lv-panel {
+  display: none;
+}
+.lv-panel.lv-panel-active {
+  display: block;
+}
+
+/* ─────────────────────────────
+   FIND A ROOM tab
+───────────────────────────── */
+
+/* Vibe quiz */
+.lv-quiz-wrap {
+  max-width: 560px;
+  margin: 0 auto 40px;
+}
+.lv-quiz-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.lv-quiz-header h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 30px;
+  color: var(--forest-ink);
+}
+.lv-quiz-header p {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Progress */
+.lv-progress-bar {
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(30, 58, 44, 0.1);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.lv-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--forest);
+  transition: width 0.3s ease;
+}
+.lv-progress-label {
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* Question card */
+.lv-question-card {
+  padding: 32px;
+  text-align: center;
+}
+.lv-question-text {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--forest-ink);
+  margin-bottom: 28px;
+  line-height: 1.3;
+}
+.lv-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.lv-option-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1.5px solid rgba(30, 58, 44, 0.2);
+  border-radius: 14px;
+  background: #fff;
+  font: inherit;
+  font-size: 16px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+}
+.lv-option-btn:hover {
+  border-color: var(--forest);
+  background: rgba(30, 58, 44, 0.04);
+}
+.lv-option-btn.lv-selected {
+  border-color: var(--forest);
+  background: rgba(30, 58, 44, 0.08);
+  color: var(--forest-ink);
+  font-weight: 500;
+}
+.lv-quiz-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.lv-quiz-nav .btn {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.lv-quiz-nav .btn-outline {
+  border: 1.5px solid var(--forest);
+  background: transparent;
+}
+.lv-quiz-nav .btn-outline:hover {
+  background: var(--forest);
+  color: #fff;
+}
+
+/* Matching results */
+.lv-results-header {
+  margin-bottom: 22px;
+}
+.lv-results-header h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--forest-ink);
+}
+.lv-results-header p {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.lv-results-header .btn {
+  border: 1.5px solid var(--forest);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 14px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.lv-household-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.lv-hh-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.lv-hh-card:hover {
+  transform: translateY(-3px);
+}
+.lv-hh-photo {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--sage-deep);
+  overflow: hidden;
+  position: relative;
+}
+.lv-hh-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lv-match-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--forest);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+.lv-match-badge.lv-match-high {
+  background: #2E7D4F;
+}
+.lv-match-badge.lv-match-mid {
+  background: #C98A12;
+}
+.lv-match-badge.lv-match-low {
+  background: #A6B0A9;
+  color: var(--forest-ink);
+}
+.lv-new-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #C0392B;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.lv-hh-body {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.lv-hh-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--forest-ink);
+}
+.lv-hh-meta {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.lv-hh-price {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--forest-ink);
+}
+.lv-hh-price span {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 3px;
+}
+.lv-vibe-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.lv-vibe-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #E6F1E9;
+  color: #22603C;
+}
+.lv-vibe-chip.lv-chip-mismatch {
+  background: #FBEEDC;
+  color: #8A5410;
+}
+.lv-hh-card-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+.lv-hh-card-actions .btn {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  flex: 1;
+  font-size: 14px;
+  height: 40px;
+}
+.lv-hh-card-actions .btn-outline {
+  border: 1.5px solid var(--forest);
+  background: transparent;
+}
+.lv-hh-card-actions .btn-outline:hover {
+  background: var(--forest);
+  color: #fff;
+}
+.lv-intro-sent {
+  font-size: 13px;
+  color: #22603C;
+  font-weight: 500;
+  padding: 6px 0;
+}
+
+/* Detail modal / drawer */
+.lv-hh-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.lv-hh-modal[hidden] {
+  display: none;
+}
+.lv-hh-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(22, 38, 29, 0.5);
+  backdrop-filter: blur(4px);
+}
+.lv-hh-drawer {
+  position: relative;
+  z-index: 1;
+  background: var(--sage);
+  width: min(100%, 640px);
+  max-height: 90vh;
+  border-radius: 24px 24px 0 0;
+  overflow-y: auto;
+  padding: 28px;
+  box-shadow: 0 -20px 60px -20px rgba(22, 38, 29, 0.4);
+}
+.lv-drawer-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: rgba(30, 58, 44, 0.1);
+  border-radius: 50%;
+  font-size: 20px;
+  color: var(--forest-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.lv-drawer-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--forest-ink);
+  margin-bottom: 6px;
+  padding-right: 40px;
+}
+.lv-drawer-meta {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.lv-drawer-section {
+  margin-top: 22px;
+}
+.lv-drawer-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.lv-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lv-member-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lv-member-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 15px;
+  flex: none;
+}
+.lv-member-name {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--forest-ink);
+}
+.lv-member-meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+.lv-rules-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.lv-rules-list li {
+  font-size: 15px;
+  color: var(--text);
+  padding-left: 20px;
+  position: relative;
+}
+.lv-rules-list li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  color: var(--forest);
+  font-weight: 600;
+}
+.lv-match-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lv-drawer-actions {
+  margin-top: 28px;
+  display: flex;
+  gap: 10px;
+}
+.lv-drawer-actions .btn {
+  flex: 1;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.lv-drawer-actions .btn-outline {
+  border: 1.5px solid var(--forest);
+  background: transparent;
+}
+
+/* ─────────────────────────────
+   POST A VACANCY tab
+───────────────────────────── */
+.lv-post-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.lv-post-form {
+  padding: 28px;
+}
+.lv-post-form h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--forest-ink);
+  margin-bottom: 22px;
+}
+.lv-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.lv-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.lv-form-field.lv-full {
+  grid-column: 1 / -1;
+}
+.lv-form-field input,
+.lv-form-field select,
+.lv-form-field textarea {
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(30, 58, 44, 0.18);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+}
+.lv-form-field input:focus,
+.lv-form-field select:focus,
+.lv-form-field textarea:focus {
+  outline: 2px solid var(--forest);
+  outline-offset: 1px;
+}
+.lv-form-field textarea {
+  height: auto;
+  padding: 12px 14px;
+  resize: vertical;
+}
+.lv-post-form .btn {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 20px;
+  width: 100%;
+}
+.lv-post-success {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #E6F1E9;
+  color: #22603C;
+  font-size: 15px;
+  font-weight: 500;
+}
+.lv-post-success[hidden] {
+  display: none;
+}
+
+/* Rent calculator */
+.lv-calc {
+  padding: 28px;
+  position: sticky;
+  top: 28px;
+}
+.lv-calc h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--forest-ink);
+  margin-bottom: 6px;
+}
+.lv-calc > p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+.lv-calc-fields {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.lv-calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.lv-calc-field input {
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(30, 58, 44, 0.18);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+}
+.lv-calc-field input:focus {
+  outline: 2px solid var(--forest);
+  outline-offset: 1px;
+}
+.lv-calc-results {
+  border-top: 1px solid rgba(30, 58, 44, 0.12);
+  padding-top: 18px;
+}
+.lv-calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(30, 58, 44, 0.07);
+  font-size: 15px;
+}
+.lv-calc-row:last-child {
+  border-bottom: 0;
+}
+.lv-calc-row dt {
+  color: var(--muted);
+}
+.lv-calc-row dd {
+  font-weight: 600;
+  color: var(--forest-ink);
+}
+.lv-calc-row.lv-calc-highlight dd {
+  color: #C0392B;
+  font-size: 18px;
+}
+.lv-calc-row.lv-calc-total {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 2px solid rgba(30, 58, 44, 0.15);
+  border-bottom: 0;
+}
+.lv-calc-row.lv-calc-total dt {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ─────────────────────────────
+   HANDOVER tab
+───────────────────────────── */
+.lv-handover-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Tracker */
+.lv-tracker {
+  padding: 28px;
+}
+.lv-tracker h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--forest-ink);
+  margin-bottom: 22px;
+}
+.lv-steps {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+.lv-steps::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(30, 58, 44, 0.12);
+  z-index: 0;
+}
+.lv-step-item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+.lv-step-item:last-child {
+  padding-bottom: 0;
+}
+.lv-step-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(30, 58, 44, 0.2);
+  background: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  flex: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  z-index: 1;
+}
+.lv-step-item.lv-step-done .lv-step-dot {
+  background: #2E7D4F;
+  border-color: #2E7D4F;
+  color: #fff;
+}
+.lv-step-item.lv-step-active .lv-step-dot {
+  border-color: var(--forest);
+  color: var(--forest);
+  background: rgba(30, 58, 44, 0.06);
+}
+.lv-step-content {
+  padding-top: 7px;
+}
+.lv-step-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--forest-ink);
+}
+.lv-step-desc {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.lv-step-date {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #2E7D4F;
+  font-weight: 500;
+}
+.lv-step-action {
+  margin-top: 10px;
+}
+.lv-step-action .btn {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  height: 38px;
+  font-size: 14px;
+  padding: 0 18px;
+}
+.lv-step-action .btn-outline {
+  border: 1.5px solid var(--forest);
+  background: transparent;
+}
+.lv-step-action .btn-outline:hover {
+  background: var(--forest);
+  color: #fff;
+}
+.lv-checklist {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lv-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+.lv-check-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--forest);
+  cursor: pointer;
+}
+.lv-check-item.lv-checked {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* Deposit calculator */
+.lv-deposit-calc {
+  padding: 28px;
+  position: sticky;
+  top: 28px;
+}
+.lv-deposit-calc h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--forest-ink);
+  margin-bottom: 6px;
+}
+.lv-deposit-calc > p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+.lv-deposit-fields {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.lv-deposit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.lv-deposit-field input {
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(30, 58, 44, 0.18);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+}
+.lv-deposit-field input:focus {
+  outline: 2px solid var(--forest);
+  outline-offset: 1px;
+}
+.lv-receipt {
+  border-top: 1px solid rgba(30, 58, 44, 0.12);
+  padding-top: 18px;
+}
+.lv-receipt h3 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.lv-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(30, 58, 44, 0.07);
+  font-size: 15px;
+}
+.lv-receipt-row:last-child {
+  border-bottom: 0;
+}
+.lv-receipt-row dt {
+  color: var(--muted);
+}
+.lv-receipt-row dd {
+  font-weight: 600;
+  color: var(--forest-ink);
+}
+.lv-receipt-total {
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 2px solid rgba(30, 58, 44, 0.15);
+  border-bottom: 0;
+}
+.lv-receipt-total dt {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 16px;
+}
+.lv-receipt-total dd {
+  font-size: 22px;
+  color: #2E7D4F;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .lv-post-grid,
+  .lv-handover-grid {
+    grid-template-columns: 1fr;
+  }
+  .lv-calc,
+  .lv-deposit-calc {
+    position: static;
+  }
+  .lv-household-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .lv-head {
+    padding: 40px 0 28px;
+  }
+  .lv-tabs {
+    flex-wrap: wrap;
+    border-radius: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+  .lv-tab {
+    font-size: 14px;
+    padding: 0 16px;
+    height: 38px;
+  }
+  .lv-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .lv-post-form,
+  .lv-calc,
+  .lv-tracker,
+  .lv-deposit-calc {
+    padding: 20px;
+  }
+  .lv-quiz-wrap {
+    max-width: 100%;
+  }
+  .lv-hh-drawer {
+    padding: 20px;
+  }
+}
