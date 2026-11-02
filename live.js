@@ -100,6 +100,11 @@ window.LV_BOOT = function () {
   var answers = {};
   var questions = LV_VIBE_QUESTIONS;
 
+  /* lets the side panels (lv-side.js) follow the quiz live */
+  function emitAnswers() {
+    document.dispatchEvent(new CustomEvent("lv:answers", { detail: { answers: Object.assign({}, answers), current: currentQ, total: questions.length } }));
+  }
+
   function renderQuestion() {
     var q = questions[currentQ];
     var total = questions.length;
@@ -124,6 +129,7 @@ window.LV_BOOT = function () {
         : '<button type="button" class="btn btn-solid" id="lv-next-btn">See my matches</button>') +
       '</div>';
 
+    emitAnswers();
     document.getElementById("lv-question-card").innerHTML =
       '<p class="lv-question-text">' + esc(q.question) + '</p>' +
       '<div class="lv-options">' + optionsHTML + '</div>' +
@@ -135,6 +141,7 @@ window.LV_BOOT = function () {
         answers[q.key] = btn.dataset.value;
         document.querySelectorAll(".lv-option-btn").forEach(function (b) { b.classList.remove("lv-selected"); });
         btn.classList.add("lv-selected");
+        emitAnswers();
       });
     });
 

@@ -174,3 +174,7 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* nav buttons never wrap onto two lines */
+.nav .btn, .nav-signin { white-space: nowrap; }
+@media (max-width: 420px) { .nav .btn { padding: 0 14px; font-size: 14px; } .nav-signin { padding: 0 8px; } .logo { font-size: 18px; } }
