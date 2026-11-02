@@ -236,13 +236,17 @@ h1 {
   gap: 14px;
   padding: 18px;
   background: var(--card);
-  border: 1px solid var(--card-line);
+  border: 1.5px solid var(--forest);
   border-radius: 16px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: background .2s, transform .2s;
+  transition: background .2s, transform .2s, border-color .2s;
 }
-.feature:hover { background: rgba(255, 255, 255, 0.72); transform: translateY(-2px); }
+.feature:hover { 
+  background: rgba(255, 255, 255, 0.72); 
+  transform: translateY(-2px);
+  border-color: var(--forest-ink);
+}
 .icon {
   width: 52px; height: 52px; flex: none;
   display: grid; place-items: center;
@@ -345,7 +349,7 @@ html { scroll-behavior: smooth; }
 
 .card {
   background: rgba(255, 255, 255, 0.62);
-  border: 1px solid var(--card-line);
+  border: 1.5px solid var(--forest);
   border-radius: 22px;
   box-shadow: 0 24px 48px -32px rgba(30, 58, 44, 0.35);
 }
@@ -380,7 +384,7 @@ html { scroll-behavior: smooth; }
 .timeline::before {
   content: "";
   position: absolute;
-  left: 12%; right: 12%; top: 15px;
+  left: 6%; right: 6%; top: 15px;
   height: 2px;
   background: repeating-linear-gradient(90deg, var(--forest) 0 6px, transparent 6px 12px);
   opacity: .35;
@@ -507,7 +511,12 @@ html { scroll-behavior: smooth; }
 
 /* ---------- StayScore ---------- */
 .stays { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.stay { overflow: hidden; display: flex; flex-direction: column; }
+.stay { 
+  overflow: hidden; 
+  display: flex; 
+  flex-direction: column;
+  border: 1.5px solid var(--forest);
+}
 .stay img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
 .stay-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
 .stay-top { display: flex; justify-content: space-between; gap: 12px; }
