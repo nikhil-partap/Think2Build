@@ -44,16 +44,16 @@ Date: 15/06/2024`;
 const PR_SAMPLE_LOCKER = [
   {
     id: 'ev_001',
-    date: '2024-06-15',
+    date: '2025-07-12',
     category: 'Move-in photos',
     title: 'Flat condition on day 1',
     note: 'Photos taken during handover. Wall crack visible in bedroom, kitchen tap was loose, bathroom drain slow.',
     amount: null,
-    photos: [] // In real app, these would be base64 or URLs
+    photos: ['assets/room-1.jpg', 'assets/hero-room.jpg']
   },
   {
     id: 'ev_002',
-    date: '2024-07-22',
+    date: '2025-09-03',
     category: 'Maintenance complaint',
     title: 'Water supply issue - complaint to owner',
     note: 'WhatsApp message sent at 6:30 AM: "Sir, no water since yesterday evening. Please fix urgently." No response received.',
@@ -62,7 +62,7 @@ const PR_SAMPLE_LOCKER = [
   },
   {
     id: 'ev_003',
-    date: '2024-07-24',
+    date: '2025-09-09',
     category: 'Maintenance complaint',
     title: 'Follow-up on water issue',
     note: 'Called owner twice. He said "not my problem, talk to water board." Water came back after 3 days on its own.',
@@ -71,25 +71,25 @@ const PR_SAMPLE_LOCKER = [
   },
   {
     id: 'ev_004',
-    date: '2024-08-05',
+    date: '2025-10-05',
     category: 'Payment/receipt',
-    title: 'August rent paid',
+    title: 'October rent paid',
     note: 'Paid ₹8,000 via UPI to owner. Transaction ID: 423156789012. Receipt received on WhatsApp.',
     amount: 8000,
     photos: []
   },
   {
     id: 'ev_005',
-    date: '2025-05-10',
+    date: '2026-06-01',
     category: 'Move-out photos',
     title: 'Flat condition on last day',
     note: 'Flat cleaned, all fixtures intact. Same wall crack as move-in still there. Left keys with owner at 11 AM.',
     amount: null,
-    photos: []
+    photos: ['assets/room-1.jpg']
   },
   {
     id: 'ev_006',
-    date: '2025-05-15',
+    date: '2026-06-10',
     category: 'Deduction',
     title: 'Owner deducted ₹12,000 for "wall damage"',
     note: 'Owner says bedroom wall crack is my fault and keeping ₹12,000 from deposit. But the crack was already there on day 1 (see move-in photos).',
@@ -296,6 +296,6 @@ const PR_ESCALATION_INFO = [
   'Send a written notice to the landlord by registered post (keep the receipt)',
   'If deposit not returned, file a complaint with the Rent Authority or civil court',
   'For PG/hostel service issues, call National Consumer Helpline at 1915',
-  'If it's a scam or online fraud, call 1930 and report at cybercrime.gov.in',
+  "If it's a scam or online fraud, call 1930 and report at cybercrime.gov.in",
   'Contact your college student welfare office for support and mediation'
 ];

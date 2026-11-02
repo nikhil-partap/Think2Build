@@ -4,8 +4,11 @@
    localStorage prefix: tn_choose_
 */
 
-(function () {
+/* Resident reviews are shared with TNDB (db.js) in the "choose-reviews" collection,
+   so they sync with the team through git when the site runs via `node server.js`. */
+window.CH_BOOT = function () {
   "use strict";
+  var REVIEWS = window.CH_REVIEWS || {}; // { listingId: [review, ...newest first] }
 
   /* ── Helpers ── */
   function stayScore(scores) {
@@ -115,10 +118,7 @@
     var currentListings = CH_LISTINGS.slice();
 
     /* read localStorage user reviews and merge */
-    function getStoredReviews() {
-      try { return JSON.parse(localStorage.getItem("tn_choose_reviews") || "{}"); }
-      catch (e) { return {}; }
-    }
+    function getStoredReviews() { return REVIEWS; }
 
     /* recalculate score with user reviews */
     function effectiveScore(l) {
@@ -389,20 +389,12 @@
       document.title = esc(listing.title) + " · TrustNest";
 
       /* merge user reviews from localStorage */
-      function getListingReviews() {
-        try {
-          var all = JSON.parse(localStorage.getItem("tn_choose_reviews") || "{}");
-          return all[listing.id] || [];
-        } catch (e) { return []; }
-      }
+      function getListingReviews() { return REVIEWS[listing.id] || []; }
 
       function saveListingReview(review) {
-        try {
-          var all = JSON.parse(localStorage.getItem("tn_choose_reviews") || "{}");
-          if (!all[listing.id]) all[listing.id] = [];
-          all[listing.id].unshift(review);
-          localStorage.setItem("tn_choose_reviews", JSON.stringify(all));
-        } catch (e) { /* storage full */ }
+        if (!REVIEWS[listing.id]) REVIEWS[listing.id] = [];
+        REVIEWS[listing.id].unshift(review);
+        if (window.TNDB) TNDB.add("choose-reviews", Object.assign({ listingId: listing.id }, review)).catch(function () {});
       }
 
       function computeScores() {
@@ -640,4 +632,14 @@
     }
   }
 
+};
+
+(function () {
+  var load = window.TNDB ? TNDB.list("choose-reviews") : Promise.resolve([]);
+  load.catch(function () { return []; }).then(function (rows) {
+    var map = {};
+    rows.slice().reverse().forEach(function (r) { (map[r.listingId] = map[r.listingId] || []).push(r); });
+    window.CH_REVIEWS = map;
+    window.CH_BOOT();
+  });
 })();

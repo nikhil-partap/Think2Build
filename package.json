@@ -1,0 +1,11 @@
+{
+  "name": "trustnest",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TrustNest: rent safe, live better. Think2Build 2026.",
+  "scripts": {
+    "start": "node server.js",
+    "lan": "node server.js --lan"
+  },
+  "engines": { "node": ">=16" }
+}

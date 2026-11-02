@@ -1207,3 +1207,11 @@
     padding: 10px 10px;
   }
 }
+
+/* ---------- Integration fixes ---------- */
+.ch-compare-tray:not(.ch-tray-visible) { visibility: hidden; transition: transform .3s, visibility 0s .3s; }
+.ch-wifi-box { min-width: 0; }
+.ch-wifi-text { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .ch-score-section > div { grid-template-columns: 1fr !important; }
+}
