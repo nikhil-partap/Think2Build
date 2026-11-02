@@ -121,12 +121,15 @@
      INJECT NAV SIGN-IN BUTTON
   ══════════════════════════════════════════ */
   function injectNavButton() {
+    /* Find the primary nav CTA — works on all pages */
     var navBtn = $(".nav .btn-solid");
     if (!navBtn) return;
 
     var session = getSession();
     if (session) {
+      /* Show "Hi, Name" with sign-out on click */
       navBtn.textContent = "Hi, " + session.name.split(" ")[0];
+      navBtn.setAttribute("href", "#");
       navBtn.addEventListener("click", function (e) {
         e.preventDefault();
         if (confirm("Sign out from TrustNest?")) {
@@ -137,10 +140,10 @@
       return;
     }
 
-    /* Replace "Get started" / "Home" with "Sign In" */
-    navBtn.innerHTML = '<span class="au-nav-signin">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>' +
-      'Sign In</span>';
+    /* Replace label + href, add click handler */
+    navBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px;margin-right:6px;vertical-align:-2px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Sign In';
+    navBtn.setAttribute("href", "#");
     navBtn.addEventListener("click", function (e) {
       e.preventDefault();
       openAuth();
@@ -195,7 +198,7 @@
   function showRolePanel() {
     screen.innerHTML = "";
     var panel = document.createElement("div");
-    panel.className = "au-panel au-active";
+    panel.className = "au-panel au-active au-enter-left";
     panel.innerHTML = buildRolePanel();
     screen.appendChild(panel);
 
@@ -340,13 +343,9 @@
   }
 
   function wireAuthPanel(panel) {
-    /* back */
+    /* back — go directly to role selection */
     panel.querySelector("#au-back").addEventListener("click", function () {
-      transitionTo("left", showRolePanel.bind(null, null));
-      /* fix: showRolePanel ignores its argument */
-      screen.querySelectorAll(".au-panel:not(.au-active)").forEach(function (p) {
-        p.parentNode && p.parentNode.removeChild(p);
-      });
+      showRolePanel();
     });
 
     /* tabs */
