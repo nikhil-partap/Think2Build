@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TenantShield · TrustNest</title>
+  <meta name="description" content="Keep proof from day one. Get your deposit back.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="protect.css">
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <a class="logo" href="index.html" aria-label="TrustNest home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <nav class="links" aria-label="Main">
+        <a href="verify.html">Verify listings</a>
+        <a href="explore.html">StayScores</a>
+        <a href="flatmates.html">Find flatmates</a>
+        <a href="protect.html" aria-current="page">Protect</a>
+      </nav>
+      <a class="btn btn-solid" href="index.html">Home</a>
+    </header>
+
+    <div class="pr-head">
+      <h1>Keep proof. Get your deposit back.</h1>
+      <p>Dated evidence, plain-English contract analysis, and formal complaint letters—everything you need to protect yourself.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="pr-tabs">
+      <button class="pr-tab pr-tab-active" data-tab="locker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>Evidence locker</span>
+      </button>
+      <button class="pr-tab" data-tab="complaint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Write a complaint</span>
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="pr-content">
+      
+      <!-- ==================== LOCKER TAB ==================== -->
+      <div class="pr-panel pr-panel-active" data-panel="locker">
+        <div class="pr-grid">
+          <div class="card pr-form-card">
+            <h2>Add evidence</h2>
+            <form id="pr-locker-form">
+              <div class="pr-field">
+                <label for="pr-ev-date">Date</label>
+                <input type="date" id="pr-ev-date" required>
+              </div>
+              
+              <div class="pr-field">
+                <label for="pr-ev-category">Category</label>
+                <select id="pr-ev-category" required>
+                  <option value="Move-in photos">Move-in photos</option>
+                  <option value="Maintenance complaint">Maintenance complaint</option>
+                  <option value="Payment/receipt">Payment/receipt</option>
+                  <option value="Conversation">Conversation</option>
+                  <option value="Move-out photos">Move-out photos</option>
+                  <option value="Deduction">Deduction</option>
+                </select>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-ev-title">Title</label>
+                <input type="text" id="pr-ev-title" placeholder="Brief description" required>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-ev-note">What happened</label>
+                <textarea id="pr-ev-note" rows="4" placeholder="Include dates, names, and details"></textarea>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-ev-amount">Amount (optional)</label>
+                <input type="number" id="pr-ev-amount" placeholder="₹">
+              </div>
+
+              <div class="pr-field">
+                <label class="pr-file-label">
+                  <input type="file" id="pr-ev-photos" accept="image/*" multiple>
+                  <span class="pr-file-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                    Add photos
+                  </span>
+                </label>
+                <div id="pr-photo-preview" class="pr-photo-preview"></div>
+              </div>
+
+              <button type="submit" class="btn btn-solid">Save entry</button>
+            </form>
+          </div>
+
+          <div class="card pr-timeline-card">
+            <div class="pr-timeline-header">
+              <h2>Your evidence</h2>
+            </div>
+
+            <div class="pr-summary" id="pr-summary">
+              <div class="pr-summary-item">
+                <strong id="pr-summary-count">0</strong>
+                <span>entries</span>
+              </div>
+              <div class="pr-summary-item">
+                <strong id="pr-summary-range">—</strong>
+                <span>date range</span>
+              </div>
+              <div class="pr-summary-item">
+                <strong id="pr-summary-disputed">₹0</strong>
+                <span>disputed</span>
+              </div>
+            </div>
+
+            <div class="pr-filters">
+              <select id="pr-filter-category">
+                <option value="">All categories</option>
+                <option value="Move-in photos">Move-in photos</option>
+                <option value="Maintenance complaint">Maintenance complaint</option>
+                <option value="Payment/receipt">Payment/receipt</option>
+                <option value="Conversation">Conversation</option>
+                <option value="Move-out photos">Move-out photos</option>
+                <option value="Deduction">Deduction</option>
+              </select>
+              <select id="pr-sort-order">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </select>
+            </div>
+
+            <div class="pr-timeline" id="pr-timeline">
+              <div class="pr-empty-timeline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15h6"/></svg>
+                <p>No entries yet. Add your first piece of evidence above.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== COMPLAINT TAB ==================== -->
+      <div class="pr-panel" data-panel="complaint">
+        <div class="pr-grid">
+          <div class="card pr-form-card">
+            <h2>Generate complaint letter</h2>
+            <form id="pr-complaint-form">
+              <div class="pr-field">
+                <label for="pr-c-your-name">Your name</label>
+                <input type="text" id="pr-c-your-name" required>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-c-landlord-name">Landlord name</label>
+                <input type="text" id="pr-c-landlord-name" required>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-c-address">Property address</label>
+                <input type="text" id="pr-c-address" required>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-c-issue">Issue</label>
+                <select id="pr-c-issue" required>
+                  <option value="">Select issue</option>
+                  <option value="deposit">Deposit not returned</option>
+                  <option value="repairs">Repairs not done</option>
+                  <option value="deductions">Illegal deductions</option>
+                  <option value="harassment">Harassment or entry without notice</option>
+                </select>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-c-amount">Amount (if applicable)</label>
+                <input type="number" id="pr-c-amount" placeholder="₹">
+              </div>
+
+              <div class="pr-field pr-field-row">
+                <div>
+                  <label for="pr-c-issue-date">Issue date</label>
+                  <input type="date" id="pr-c-issue-date" required>
+                </div>
+                <div>
+                  <label for="pr-c-deadline">Deadline (days)</label>
+                  <input type="number" id="pr-c-deadline" value="7" min="1" required>
+                </div>
+              </div>
+
+              <div class="pr-field">
+                <label for="pr-c-what-you-want">What you want</label>
+                <textarea id="pr-c-what-you-want" rows="3" placeholder="E.g., Full refund of deposit, repairs completed, harassment to stop" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-solid">Generate letter</button>
+            </form>
+          </div>
+
+          <div class="card pr-letter-card">
+            <h2>Your complaint letter</h2>
+            
+            <div id="pr-letter-empty" class="pr-letter-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <p>Fill the form to generate a formal complaint letter</p>
+            </div>
+
+            <div id="pr-letter-content" class="pr-letter-content" hidden>
+              <div class="letter pr-letter-doc" id="pr-letter-doc"></div>
+              
+              <div class="pr-letter-actions">
+                <button type="button" class="btn btn-outline" id="pr-copy-letter">Copy letter</button>
+                <button type="button" class="btn btn-solid" id="pr-print-letter">Print / Save PDF</button>
+              </div>
+
+              <div class="pr-escalation">
+                <h3>Where to escalate</h3>
+                <ol id="pr-escalation-list"></ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card pr-tracker-card" id="pr-tracker-card" hidden>
+          <h2>Complaint tracker</h2>
+          <div id="pr-complaint-list"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <a class="logo small" href="index.html">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 4 13.5V27a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V13.5Z" fill="currentColor"/><path d="M16 25c-4.5-2.4-7-5.3-7-8.6 0-2.3 1.8-4 3.8-4 1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8 2 0 3.8 1.7 3.8 4 0 3.3-2.5 6.2-7 8.6Z" fill="#D3DDD4"/></svg>
+        <span>TrustNest</span>
+      </a>
+      <p>Need legal help? Contact your college student welfare office.</p>
+    </footer>
+  </div>
+
+  <script src="protect-data.js"></script>
+  <script src="protect.js"></script>
+</body>
+</html>
