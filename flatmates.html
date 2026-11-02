@@ -1,15 +1,16 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Find flatmates · TrustNest</title>
+  <title>Find flatmates Â· TrustNest</title>
   <meta name="description" content="When a flatmate leaves, fill the bed with someone who fits. Vibe quiz, compatibility matching and handover tracker.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live.css">
+  <link rel="stylesheet" href="live.css"
+  <link rel="stylesheet" href="auth.css">>
 </head>
 <body>
   <div class="page">
@@ -31,7 +32,7 @@
     <div class="lv-head">
       <div class="step">Live by TrustNest</div>
       <h1>When a flatmate leaves, fill the bed with someone who fits.</h1>
-      <p>Internship, placement, or going home — someone always leaves suddenly. TrustNest finds a compatible replacement and handles the handover so the rest of you don't pay extra.</p>
+      <p>Internship, placement, or going home â€” someone always leaves suddenly. TrustNest finds a compatible replacement and handles the handover so the rest of you don't pay extra.</p>
     </div>
 
     <!-- Tab bar -->
@@ -41,7 +42,7 @@
       <button class="lv-tab" role="tab" aria-selected="false" aria-controls="lv-handover" id="tab-handover">Handover</button>
     </div>
 
-    <!-- ══ FIND A ROOM ══ -->
+    <!-- â•â• FIND A ROOM â•â• -->
     <div class="lv-panel lv-panel-active" id="lv-find" role="tabpanel" aria-labelledby="tab-find">
       <!-- Vibe quiz (shown until answered) -->
       <div id="lv-quiz-section">
@@ -73,7 +74,7 @@
       </div>
     </div>
 
-    <!-- ══ POST A VACANCY ══ -->
+    <!-- â•â• POST A VACANCY â•â• -->
     <div class="lv-panel" id="lv-post" role="tabpanel" aria-labelledby="tab-post">
       <div class="lv-post-grid">
         <form class="lv-post-form card" id="lv-vacancy-form" novalidate>
@@ -102,7 +103,7 @@
               </select>
             </div>
             <div class="lv-form-field">
-              <label for="lv-total-rent">Total rent (₹/month)</label>
+              <label for="lv-total-rent">Total rent (â‚¹/month)</label>
               <input type="number" id="lv-total-rent" placeholder="e.g. 18000" min="1000">
             </div>
             <div class="lv-form-field">
@@ -136,7 +137,7 @@
           <p>See what an empty bed costs everyone, in real time.</p>
           <div class="lv-calc-fields">
             <div class="lv-calc-field">
-              <label for="lv-calc-rent">Total rent (₹/month)</label>
+              <label for="lv-calc-rent">Total rent (â‚¹/month)</label>
               <input type="number" id="lv-calc-rent" placeholder="18000" value="18000" min="1000">
             </div>
             <div class="lv-calc-field">
@@ -150,18 +151,18 @@
           </div>
           <div class="lv-calc-results">
             <dl>
-              <div class="lv-calc-row"><dt>Each person's normal share</dt><dd id="lv-res-normal">₹6,000</dd></div>
-              <div class="lv-calc-row"><dt>Share while bed is empty</dt><dd id="lv-res-empty">₹9,000</dd></div>
-              <div class="lv-calc-row lv-calc-highlight"><dt>Extra cost per person</dt><dd id="lv-res-extra">₹3,000/month</dd></div>
-              <div class="lv-calc-row"><dt>Cost per person per day</dt><dd id="lv-res-day">₹100/day</dd></div>
-              <div class="lv-calc-row lv-calc-total"><dt>Total lost until filled</dt><dd id="lv-res-total">₹6,000</dd></div>
+              <div class="lv-calc-row"><dt>Each person's normal share</dt><dd id="lv-res-normal">â‚¹6,000</dd></div>
+              <div class="lv-calc-row"><dt>Share while bed is empty</dt><dd id="lv-res-empty">â‚¹9,000</dd></div>
+              <div class="lv-calc-row lv-calc-highlight"><dt>Extra cost per person</dt><dd id="lv-res-extra">â‚¹3,000/month</dd></div>
+              <div class="lv-calc-row"><dt>Cost per person per day</dt><dd id="lv-res-day">â‚¹100/day</dd></div>
+              <div class="lv-calc-row lv-calc-total"><dt>Total lost until filled</dt><dd id="lv-res-total">â‚¹6,000</dd></div>
             </dl>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ HANDOVER ══ -->
+    <!-- â•â• HANDOVER â•â• -->
     <div class="lv-panel" id="lv-handover" role="tabpanel" aria-labelledby="tab-handover">
       <div class="lv-handover-grid">
         <!-- 5-step tracker -->
@@ -178,32 +179,32 @@
           <p>Calculate how the deposit is split between the outgoing and incoming flatmate.</p>
           <div class="lv-deposit-fields">
             <div class="lv-deposit-field">
-              <label for="lv-dep-total">Outgoing flatmate's deposit (₹)</label>
+              <label for="lv-dep-total">Outgoing flatmate's deposit (â‚¹)</label>
               <input type="number" id="lv-dep-total" placeholder="15000" value="15000" min="0">
             </div>
             <div class="lv-deposit-field">
-              <label for="lv-dep-damage">Damage deduction (₹)</label>
+              <label for="lv-dep-damage">Damage deduction (â‚¹)</label>
               <input type="number" id="lv-dep-damage" placeholder="0" value="0" min="0">
             </div>
             <div class="lv-deposit-field">
-              <label for="lv-dep-electricity">Pending electricity (₹)</label>
+              <label for="lv-dep-electricity">Pending electricity (â‚¹)</label>
               <input type="number" id="lv-dep-electricity" placeholder="0" value="0" min="0">
             </div>
             <div class="lv-deposit-field">
-              <label for="lv-dep-rent">Pending rent (₹)</label>
+              <label for="lv-dep-rent">Pending rent (â‚¹)</label>
               <input type="number" id="lv-dep-rent" placeholder="0" value="0" min="0">
             </div>
           </div>
           <div class="lv-receipt">
             <h3>Receipt</h3>
             <dl>
-              <div class="lv-receipt-row"><dt>Original deposit</dt><dd id="lv-rec-orig">₹15,000</dd></div>
-              <div class="lv-receipt-row"><dt>Damage deduction</dt><dd id="lv-rec-damage">₹0</dd></div>
-              <div class="lv-receipt-row"><dt>Pending electricity</dt><dd id="lv-rec-elec">₹0</dd></div>
-              <div class="lv-receipt-row"><dt>Pending rent</dt><dd id="lv-rec-rent">₹0</dd></div>
-              <div class="lv-receipt-row lv-receipt-total"><dt>Refund to outgoing flatmate</dt><dd id="lv-rec-refund">₹15,000</dd></div>
+              <div class="lv-receipt-row"><dt>Original deposit</dt><dd id="lv-rec-orig">â‚¹15,000</dd></div>
+              <div class="lv-receipt-row"><dt>Damage deduction</dt><dd id="lv-rec-damage">â‚¹0</dd></div>
+              <div class="lv-receipt-row"><dt>Pending electricity</dt><dd id="lv-rec-elec">â‚¹0</dd></div>
+              <div class="lv-receipt-row"><dt>Pending rent</dt><dd id="lv-rec-rent">â‚¹0</dd></div>
+              <div class="lv-receipt-row lv-receipt-total"><dt>Refund to outgoing flatmate</dt><dd id="lv-rec-refund">â‚¹15,000</dd></div>
             </dl>
-            <p style="margin-top:16px;font-size:14px;color:var(--muted);" id="lv-rec-note">The incoming flatmate pays ₹15,000 directly to the landlord as their deposit.</p>
+            <p style="margin-top:16px;font-size:14px;color:var(--muted);" id="lv-rec-note">The incoming flatmate pays â‚¹15,000 directly to the landlord as their deposit.</p>
           </div>
         </div>
       </div>
@@ -229,5 +230,6 @@
 
   <script src="live-data.js"></script>
   <script src="live.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

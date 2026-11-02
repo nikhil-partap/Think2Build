@@ -1,14 +1,15 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Check a listing · TrustNest</title>
+  <title>Check a listing Â· TrustNest</title>
   <meta name="description" content="Paste any rental listing and get a trust report before you pay a token.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="auth.css">
 </head>
 <body>
   <div class="page">
@@ -67,10 +68,10 @@
                 <option value="3bhk">3BHK</option>
               </select>
             </label>
-            <label>Monthly rent (₹)
+            <label>Monthly rent (â‚¹)
               <input id="rent" type="number" inputmode="numeric" min="0" placeholder="Detect from text">
             </label>
-            <label>Deposit asked (₹)
+            <label>Deposit asked (â‚¹)
               <input id="deposit" type="number" inputmode="numeric" min="0" placeholder="Optional">
             </label>
             <label>Owner's phone
@@ -156,5 +157,6 @@
 
   <script src="scanner.js"></script>
   <script src="verify.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>
