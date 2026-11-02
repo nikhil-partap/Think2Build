@@ -380,10 +380,14 @@ window.CH_BOOT = function () {
   var detailRoot = document.getElementById("ch-detail-root");
   if (detailRoot) {
     var params = new URLSearchParams(window.location.search);
-    // id can come from ?id=, from #id (survives redirects), or from the last room opened in this tab
+    // id can come from ?id=, from query string, from hash, or from path/storage
     var id = (params.get("id") || location.hash.replace(/^#/, "") || "").trim().toLowerCase();
-    if (!id) { try { id = sessionStorage.getItem("ch_last_room") || ""; } catch (e) {} }
-    var listing = CH_LISTINGS.find(function (l) { return l.id.toLowerCase() === id; });
+    if (!id && window.location.search) {
+      var match = window.location.search.match(/[?&]id=([^&]+)/i);
+      if (match) id = decodeURIComponent(match[1]).trim().toLowerCase();
+    }
+    if (!id) { try { id = (sessionStorage.getItem("ch_last_room") || "").trim().toLowerCase(); } catch (e) {} }
+    var listing = CH_LISTINGS.find(function (l) { return String(l.id).toLowerCase() === id; });
 
     if (!id) {
       // nothing to show: go to the room list instead of a dead end
