@@ -178,3 +178,12 @@
 /* nav buttons never wrap onto two lines */
 .nav .btn, .nav-signin { white-space: nowrap; }
 @media (max-width: 420px) { .nav .btn { padding: 0 14px; font-size: 14px; } .nav-signin { padding: 0 8px; } .logo { font-size: 18px; } }
+
+/* ---------- Smooth scrolling (smooth.js) ---------- */
+html.tn-smooth { scroll-behavior: auto; }
+.tn-progress {
+  position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 60;
+  background: linear-gradient(90deg, #4E9A69, var(--forest));
+  transform-origin: left; transform: scaleX(0);
+  pointer-events: none;
+}
