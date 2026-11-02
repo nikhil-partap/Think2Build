@@ -13,7 +13,8 @@ document.querySelectorAll("[data-preset]").forEach(btn => {
     btn.classList.add("on");
     listing.value = PRESETS[btn.dataset.preset];
     $("area").value = btn.dataset.preset === "army" ? "mohali" : "rajpura";
-    ["type", "rent", "deposit", "phone", "payMethod"].forEach(id => ($(id).value = ""));
+    ["type", "rent", "deposit", "phone", "payMethod", "ownerTold", "ownerDoc"].forEach(id => ($(id).value = ""));
+    ownerFile = null; $("ownerFileLabel").textContent = "Upload the bill or receipt";
     setPay("");
     photos = []; renderThumbs();
     runCheck();
@@ -29,13 +30,22 @@ function setPay(v) {
 }
 
 /* ---------- Photo fingerprinting (average hash) ---------- */
-const PHOTO_DB_KEY = "tn_photo_db";
+// Photo fingerprints come from the shared "verify-reports" collection
 function photoDB() {
-  try { return JSON.parse(localStorage.getItem(PHOTO_DB_KEY) || "[]"); } catch (e) { return []; }
+  const out = [];
+  window.TN_REPORTS.forEach(r => (r.photoHashes || []).forEach(hash =>
+    out.push({ hash, date: new Date(r.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) })));
+  return out;
 }
-function saveDB(db) {
-  try { localStorage.setItem(PHOTO_DB_KEY, JSON.stringify(db)); } catch (e) {}
-}
+
+// A stable id for this browser, so "You reported" only shows on your own reports
+const DEVICE = (() => {
+  try {
+    let d = localStorage.getItem("tn_device");
+    if (!d) { d = Math.random().toString(36).slice(2, 10); localStorage.setItem("tn_device", d); }
+    return d;
+  } catch (e) { return "anon"; }
+})();
 
 function hashImage(url) {
   return new Promise(resolve => {
@@ -122,9 +132,12 @@ function runCheck() {
     payMethod: $("payMethod").value,
     payBeforeVisit,
     photoDupes: dupes,
-    photoChecked: photos.length > 0
+    photoChecked: photos.length > 0,
+    owner: { nameTold: $("ownerTold").value, nameOnDoc: $("ownerDoc").value, docUploaded: !!ownerFile }
   });
   last = { ...res, text, area };
+  $("printDate").textContent = new Date().toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
+  $("printQuote").textContent = text.length > 280 ? text.slice(0, 280) + "…" : text;
   render(res);
   if (window.matchMedia("(max-width: 1024px)").matches) $("vReport").scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -213,23 +226,37 @@ function animateScore(target) {
 }
 
 /* ---------- Report + copy ---------- */
-$("reportBtn").addEventListener("click", () => {
+$("reportBtn").addEventListener("click", async () => {
   if (!last) return;
-  const date = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short" });
-  // phone
-  if (last.facts.phone) {
-    let local = {};
-    try { local = JSON.parse(localStorage.getItem("tn_reported_phones") || "{}"); } catch (e) {}
-    local[last.facts.phone] = (local[last.facts.phone] || 0) + 1;
-    try { localStorage.setItem("tn_reported_phones", JSON.stringify(local)); } catch (e) {}
+  const btn = $("reportBtn");
+  btn.disabled = true;
+  btn.textContent = "Reporting…";
+  const user = window.TrustNestUser ? window.TrustNestUser() : null;
+  const record = {
+    phone: last.facts.phone || null,
+    photoHashes: photos.map(p => p.hash).filter(Boolean),
+    area: last.area,
+    type: TYPE_LABEL[last.facts.type] || "Room",
+    rent: last.facts.rent || null,
+    pattern: (last.flags.find(f => f.bad) || { title: "Reported by a student" }).title,
+    score: last.score,
+    excerpt: last.text.slice(0, 200),
+    reportedBy: user ? user.name : "Anonymous student",
+    device: DEVICE
+  };
+  try {
+    const saved = await TNDB.add("verify-reports", record);
+    window.TN_REPORTS.push(saved);
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = "Report this listing";
+    const n = $("reportNote");
+    n.textContent = "Couldn't save the report. Check that the local server is running and try again.";
+    n.hidden = false;
+    return;
   }
-  // photos
-  const db = photoDB();
-  photos.forEach(p => { if (p.hash && !db.some(r => r.hash === p.hash)) db.push({ hash: p.hash, date }); });
-  saveDB(db);
-
-  $("reportBtn").textContent = "Reported";
-  $("reportBtn").disabled = true;
+  renderFeed();
+  btn.textContent = "Reported ✓";
   const bits = [];
   if (last.facts.phone) bits.push("the phone number");
   if (photos.length) bits.push(`${photos.length} photo${photos.length > 1 ? "s" : ""}`);
@@ -254,3 +281,65 @@ $("copyBtn").addEventListener("click", async () => {
   catch (e) { btn.textContent = "Couldn't copy"; }
   setTimeout(() => (btn.textContent = "Copy report"), 2000);
 });
+
+
+/* ---------- Owner document ---------- */
+let ownerFile = null;
+$("ownerFile").addEventListener("change", e => {
+  ownerFile = e.target.files[0] || null;
+  $("ownerFileLabel").textContent = ownerFile ? `Added: ${ownerFile.name}` : "Upload the bill or receipt";
+});
+
+/* ---------- PDF ---------- */
+$("pdfBtn").addEventListener("click", () => window.print());
+
+/* ---------- Community feed ---------- */
+const AREA_NAME = { rajpura: "Rajpura", zirakpur: "Zirakpur", mohali: "Mohali", chandigarh: "Chandigarh" };
+const HOUR = 3600e3;
+const SEED_FEED = [
+  { area: "mohali", type: "2BHK", rent: 4500, pattern: "Owner can't meet you", score: 6, ago: 2 * HOUR },
+  { area: "rajpura", type: "PG bed", rent: 3500, pattern: "Asks for money before you visit", score: 18, ago: 9 * HOUR },
+  { area: "zirakpur", type: "1BHK", rent: 4200, pattern: "A photo was used in another listing", score: 22, ago: 27 * HOUR },
+  { area: "rajpura", type: "Room", rent: 2800, pattern: "This number was reported 6 times", score: 12, ago: 51 * HOUR },
+  { area: "chandigarh", type: "PG bed", rent: 5000, pattern: "Name on the document doesn't match", score: 31, ago: 4 * 24 * HOUR }
+];
+
+function feedItems() {
+  const now = Date.now();
+  const shared = window.TN_REPORTS.map(r => ({ ...r, ts: r.createdAt, mine: r.device === DEVICE }));
+  return [...shared, ...SEED_FEED.map(s => ({ ...s, ts: now - s.ago }))].sort((a, b) => b.ts - a.ts);
+}
+
+function timeAgo(ts) {
+  const m = Math.round((Date.now() - ts) / 60000);
+  if (m < 1) return "just now";
+  if (m < 60) return `${m} min ago`;
+  const h = Math.round(m / 60);
+  if (h < 24) return `${h} hour${h > 1 ? "s" : ""} ago`;
+  const d = Math.round(h / 24);
+  return `${d} day${d > 1 ? "s" : ""} ago`;
+}
+
+function renderFeed() {
+  const items = feedItems();
+  const week = items.filter(i => Date.now() - i.ts < 7 * 24 * HOUR).length;
+  $("feedStats").textContent = `${week} listings reported by students this week.`;
+  const ul = $("feed");
+  ul.innerHTML = "";
+  items.slice(0, 6).forEach(i => {
+    const li = document.createElement("li");
+    li.className = "card" + (i.mine ? " mine" : "");
+    li.innerHTML = `
+      <div class="v-feed-top"><span class="v-feed-score"></span><span class="v-feed-when"></span></div>
+      <strong></strong>
+      <p></p>`;
+    li.querySelector(".v-feed-score").textContent = `${i.score}/100`;
+    if (i.score >= 45) li.querySelector(".v-feed-score").classList.add("mid");
+    li.querySelector(".v-feed-when").textContent = (i.mine ? "You reported · " : i.reportedBy && i.reportedBy !== "Anonymous student" ? `${i.reportedBy.split(" ")[0]} reported · ` : i.reportedBy ? "A student reported · " : "") + timeAgo(i.ts);
+    li.querySelector("strong").textContent = `${i.type} in ${AREA_NAME[i.area] || i.area}${i.rent ? ` for ₹${Number(i.rent).toLocaleString("en-IN")}` : ""}`;
+    li.querySelector("p").textContent = i.pattern;
+    ul.append(li);
+  });
+}
+renderFeed();
+window.TN_REPORTS_READY.then(() => renderFeed());

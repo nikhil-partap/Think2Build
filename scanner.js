@@ -17,16 +17,21 @@ const AREA_AVG = {
 
 const TYPE_LABEL = { pg: "PG bed", room: "room", "1bhk": "1BHK", "2bhk": "2BHK", "3bhk": "3BHK" };
 
-// Numbers other students have reported (demo seed + anything reported in this browser)
+// Numbers other students have reported: demo seed + shared reports from the team database
+// (window.TN_REPORTS is filled from TNDB "verify-reports" by the page).
 const SEED_REPORTED = { "7009011223": 14, "9888877701": 6 };
+window.TN_REPORTS = window.TN_REPORTS || [];
 
 function getReported() {
-  let local = {};
-  try { local = JSON.parse(localStorage.getItem("tn_reported_phones") || "{}"); } catch (e) {}
   const all = { ...SEED_REPORTED };
-  for (const k in local) all[k] = (all[k] || 0) + local[k];
+  window.TN_REPORTS.forEach(r => { if (r.phone) all[r.phone] = (all[r.phone] || 0) + 1; });
   return all;
 }
+
+// Load shared reports once per page (no-op if db.js isn't included)
+window.TN_REPORTS_READY = window.TNDB
+  ? TNDB.list("verify-reports").then(rows => { window.TN_REPORTS = rows; return rows; }).catch(() => window.TN_REPORTS)
+  : Promise.resolve(window.TN_REPORTS);
 
 function normPhone(s) {
   const d = String(s || "").replace(/\D/g, "");
@@ -149,7 +154,7 @@ function scan(text, area, details = {}) {
   const reports = phone ? reported[phone] || 0 : 0;
   if (reports) {
     score -= 30;
-    flags.unshift({ bad: true, title: `This number was reported ${reports} times`, why: "Other students flagged this phone number for asking money without showing the room." });
+    flags.unshift({ bad: true, title: `This number was reported ${reports} time${reports === 1 ? "" : "s"}`, why: "Other students flagged this phone number for asking money without showing the room." });
   }
 
   // Photo check
@@ -163,6 +168,23 @@ function scan(text, area, details = {}) {
     if (g.test(t)) { score += 2; flags.push({ bad: false, title: g.title, why: g.why }); }
   });
 
+  // Ownership proof: does the name on the bill / tax receipt match the person renting it out?
+  const o = details.owner || {};
+  let ownerState = "unknown", ownerNote = "Ask for an electricity bill in the owner's name";
+  if (o.nameTold && o.nameOnDoc) {
+    if (namesMatch(o.nameTold, o.nameOnDoc)) {
+      ownerState = o.docUploaded ? "pass" : "unknown";
+      ownerNote = o.docUploaded ? `Name on document matches ${o.nameTold.trim()}` : "Names match. Upload the document to confirm";
+      if (o.docUploaded) { score += 4; flags.push({ bad: false, title: "Ownership proof matches", why: "The name on the bill or receipt matches the person renting out the room." }); }
+    } else {
+      ownerState = "fail";
+      ownerNote = `Document says ${o.nameOnDoc.trim()}`;
+      score -= 18;
+      flags.unshift({ bad: true, title: "Name on the document doesn't match", why: `The person renting it out says they're ${o.nameTold.trim()}, but the document is in the name of ${o.nameOnDoc.trim()}. They may be a broker or someone who doesn't own the place.` });
+    }
+  }
+
+  if (ownerState === "fail") score = Math.min(score, 66); // a mismatch alone should never read as safe
   score = Math.max(4, Math.min(98, score));
 
   const checks = [
@@ -170,8 +192,19 @@ function scan(text, area, details = {}) {
     { label: "No money before a visit", state: hit.advance ? "fail" : "pass", note: hit.advance ? "Token or advance requested" : "No advance requested" },
     { label: "Owner can show the place", state: hit.away ? "fail" : "pass", note: hit.away ? "Owner says they're away" : "No 'owner away' script" },
     { label: "Phone number is clean", state: !phone ? "unknown" : reports ? "fail" : "pass", note: !phone ? "No number found" : reports ? `${reports} reports` : `${phone.slice(0, 5)} ${phone.slice(5)} has no reports` },
+    { label: "Owner is who they say", state: ownerState, note: ownerNote },
     { label: "Photos are original", state: details.photoChecked ? (dupes ? "fail" : "pass") : "unknown", note: details.photoChecked ? (dupes ? "Seen in another listing" : "No matches found") : "Upload photos to check" }
   ];
 
   return { score, flags, checks, facts: { phone, rent, type, avg } };
+}
+
+function namesMatch(a, b) {
+  const words = s => s.toLowerCase().replace(/\b(mr|mrs|ms|shri|smt|dr)\.?\s/g, "").split(/[^a-z]+/).filter(w => w.length > 1);
+  const A = words(a), B = words(b);
+  if (!A.length || !B.length) return false;
+  // surname must match, and at least one other word or initial
+  const lastA = A[A.length - 1], lastB = B[B.length - 1];
+  if (lastA !== lastB) return false;
+  return A.length === 1 || B.length === 1 || A.some(w => B.includes(w) && w !== lastA) || A[0][0] === B[0][0];
 }

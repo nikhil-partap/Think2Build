@@ -33,12 +33,12 @@
     </div>
 
     <!-- Tabs -->
-    <div class="pr-tabs">
-      <button class="pr-tab pr-tab-active" data-tab="locker">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <div class="pr-tabs" role="tablist" aria-label="Protect tools">
+      <button class="pr-tab pr-tab-active" data-tab="locker" role="tab" aria-selected="true" id="pr-tab-locker" aria-controls="pr-panel-locker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
         <span>Evidence locker</span>
       </button>
-      <button class="pr-tab" data-tab="complaint">
+      <button class="pr-tab" data-tab="complaint" role="tab" aria-selected="false" tabindex="-1" id="pr-tab-complaint" aria-controls="pr-panel-complaint">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <span>Write a complaint</span>
       </button>
@@ -48,7 +48,7 @@
     <div class="pr-content">
       
       <!-- ==================== LOCKER TAB ==================== -->
-      <div class="pr-panel pr-panel-active" data-panel="locker">
+      <div class="pr-panel pr-panel-active" data-panel="locker" role="tabpanel" id="pr-panel-locker" aria-labelledby="pr-tab-locker">
         <div class="pr-grid">
           <div class="card pr-form-card">
             <h2>Add evidence</h2>
@@ -72,7 +72,7 @@
 
               <div class="pr-field">
                 <label for="pr-ev-title">Title</label>
-                <input type="text" id="pr-ev-title" placeholder="Brief description" required>
+                <input type="text" id="pr-ev-title" placeholder="e.g. Bedroom wall crack on move-in day">
               </div>
 
               <div class="pr-field">
@@ -81,8 +81,8 @@
               </div>
 
               <div class="pr-field">
-                <label for="pr-ev-amount">Amount (optional)</label>
-                <input type="number" id="pr-ev-amount" placeholder="₹">
+                <label for="pr-ev-amount">Amount in ₹ <span class="pr-opt">optional</span></label>
+                <input type="number" id="pr-ev-amount" min="0" inputmode="numeric" placeholder="e.g. 12000">
               </div>
 
               <div class="pr-field">
@@ -97,12 +97,17 @@
               </div>
 
               <button type="submit" class="btn btn-solid">Save entry</button>
+              <p class="pr-form-msg" id="pr-locker-msg" role="status" hidden></p>
             </form>
           </div>
 
           <div class="card pr-timeline-card">
             <div class="pr-timeline-header">
               <h2>Your evidence</h2>
+              <div class="pr-header-actions">
+                <button type="button" class="pr-link-btn" id="pr-load-sample">Load sample data</button>
+                <button type="button" class="btn btn-outline pr-small-btn" id="pr-export">Export evidence file</button>
+              </div>
             </div>
 
             <div class="pr-summary" id="pr-summary">
@@ -147,29 +152,29 @@
       </div>
 
       <!-- ==================== COMPLAINT TAB ==================== -->
-      <div class="pr-panel" data-panel="complaint">
+      <div class="pr-panel" data-panel="complaint" role="tabpanel" id="pr-panel-complaint" aria-labelledby="pr-tab-complaint">
         <div class="pr-grid">
           <div class="card pr-form-card">
             <h2>Generate complaint letter</h2>
             <form id="pr-complaint-form">
               <div class="pr-field">
                 <label for="pr-c-your-name">Your name</label>
-                <input type="text" id="pr-c-your-name" required>
+                <input type="text" id="pr-c-your-name">
               </div>
 
               <div class="pr-field">
                 <label for="pr-c-landlord-name">Landlord name</label>
-                <input type="text" id="pr-c-landlord-name" required>
+                <input type="text" id="pr-c-landlord-name">
               </div>
 
               <div class="pr-field">
                 <label for="pr-c-address">Property address</label>
-                <input type="text" id="pr-c-address" required>
+                <input type="text" id="pr-c-address">
               </div>
 
               <div class="pr-field">
                 <label for="pr-c-issue">Issue</label>
-                <select id="pr-c-issue" required>
+                <select id="pr-c-issue">
                   <option value="">Select issue</option>
                   <option value="deposit">Deposit not returned</option>
                   <option value="repairs">Repairs not done</option>
@@ -179,27 +184,29 @@
               </div>
 
               <div class="pr-field">
-                <label for="pr-c-amount">Amount (if applicable)</label>
-                <input type="number" id="pr-c-amount" placeholder="₹">
+                <label for="pr-c-amount">Amount in ₹ <span class="pr-opt">if money is involved</span></label>
+                <input type="number" id="pr-c-amount" min="0" inputmode="numeric" placeholder="e.g. 12000">
               </div>
 
               <div class="pr-field pr-field-row">
                 <div>
-                  <label for="pr-c-issue-date">Issue date</label>
-                  <input type="date" id="pr-c-issue-date" required>
+                  <label for="pr-c-issue-date">When did it start?</label>
+                  <input type="date" id="pr-c-issue-date">
                 </div>
                 <div>
-                  <label for="pr-c-deadline">Deadline (days)</label>
-                  <input type="number" id="pr-c-deadline" value="7" min="1" required>
+                  <label for="pr-c-deadline">Days to respond</label>
+                  <input type="number" id="pr-c-deadline" value="7" min="1" max="60">
                 </div>
               </div>
 
               <div class="pr-field">
                 <label for="pr-c-what-you-want">What you want</label>
-                <textarea id="pr-c-what-you-want" rows="3" placeholder="E.g., Full refund of deposit, repairs completed, harassment to stop" required></textarea>
+                <textarea id="pr-c-what-you-want" rows="2" placeholder="e.g. Refund my full deposit of ₹12,000"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-solid">Generate letter</button>
+              <p class="pr-hint" id="pr-evidence-hint"></p>
+              <button type="submit" class="btn btn-solid">Write my letter</button>
+              <p class="pr-form-msg" id="pr-complaint-msg" role="status" hidden></p>
             </form>
           </div>
 
@@ -208,7 +215,7 @@
             
             <div id="pr-letter-empty" class="pr-letter-empty">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <p>Fill the form to generate a formal complaint letter</p>
+              <p>Fill in the form and your formal letter appears here, ready to copy or print.</p>
             </div>
 
             <div id="pr-letter-content" class="pr-letter-content" hidden>
@@ -219,16 +226,18 @@
                 <button type="button" class="btn btn-solid" id="pr-print-letter">Print / Save PDF</button>
               </div>
 
-              <div class="pr-escalation">
-                <h3>Where to escalate</h3>
-                <ol id="pr-escalation-list"></ol>
-              </div>
+            </div>
+
+            <div class="pr-escalation">
+              <h3>Where to escalate</h3>
+              <ol id="pr-escalation-list"></ol>
             </div>
           </div>
         </div>
 
         <div class="card pr-tracker-card" id="pr-tracker-card" hidden>
           <h2>Complaint tracker</h2>
+          <p class="pr-hint">Update each letter as you send it, follow up, or escalate. Dates are recorded automatically.</p>
           <div id="pr-complaint-list"></div>
         </div>
       </div>
@@ -244,6 +253,18 @@
     </footer>
   </div>
 
+  <dialog class="pr-lightbox" id="pr-lightbox" aria-label="Evidence photo">
+    <img alt="Evidence photo">
+    <div class="pr-lb-bar">
+      <button type="button" class="pr-lb-prev" aria-label="Previous photo">‹</button>
+      <span class="pr-lb-count"></span>
+      <button type="button" class="pr-lb-next" aria-label="Next photo">›</button>
+      <button type="button" class="pr-lb-close" aria-label="Close">×</button>
+    </div>
+  </dialog>
+
+  <script src="site.js"></script>
+  <script src="db.js"></script>
   <script src="protect-data.js"></script>
   <script src="protect.js"></script>
 </body>

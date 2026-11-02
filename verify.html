@@ -107,6 +107,24 @@
           <ul class="thumbs" id="thumbs"></ul>
         </fieldset>
 
+        <fieldset>
+          <legend><span>4</span>Check the owner <em>Optional</em></legend>
+          <p class="v-hint">Ask for an electricity bill or property tax receipt. The name on it should match the person renting it out.</p>
+          <div class="v-fields">
+            <label>Name they told you
+              <input id="ownerTold" type="text" placeholder="e.g. Rajesh Kumar">
+            </label>
+            <label>Name on the document
+              <input id="ownerDoc" type="text" placeholder="e.g. R. Kumar">
+            </label>
+          </div>
+          <label class="drop drop-sm">
+            <input id="ownerFile" type="file" accept="image/*,application/pdf">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 4h10l6 6v18H9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M19 4v6h6M13 17h8M13 22h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span><strong id="ownerFileLabel">Upload the bill or receipt</strong>Stays on your device. Nothing is uploaded anywhere.</span>
+          </label>
+        </fieldset>
+
         <button type="submit" class="btn btn-solid v-submit">Check this listing</button>
       </form>
 
@@ -119,6 +137,8 @@
         </div>
 
         <div id="vReport" hidden>
+          <p class="v-print-head">TrustNest trust report · <span id="printDate"></span></p>
+          <blockquote class="v-print-quote" id="printQuote"></blockquote>
           <div class="v-top">
             <div class="score-ring" id="ring" style="--p:0"><span id="scoreNum">0</span><small>/100</small></div>
             <div class="verdict">
@@ -139,11 +159,20 @@
           <div class="v-actions">
             <button type="button" class="btn btn-outline" id="reportBtn">Report this listing</button>
             <button type="button" class="btn btn-solid" id="copyBtn">Copy report</button>
+            <button type="button" class="btn btn-outline" id="pdfBtn">Save as PDF</button>
           </div>
           <p class="v-note" id="reportNote" hidden></p>
         </div>
       </aside>
     </div>
+
+    <section class="v-feed" aria-labelledby="feedTitle">
+      <div class="v-feed-head">
+        <h2 id="feedTitle">Recently reported near campus</h2>
+        <p id="feedStats"></p>
+      </div>
+      <ul class="v-feed-list" id="feed"></ul>
+    </section>
 
     <footer class="footer">
       <a class="logo small" href="index.html">
@@ -154,6 +183,8 @@
     </footer>
   </div>
 
+  <script src="site.js"></script>
+  <script src="db.js"></script>
   <script src="scanner.js"></script>
   <script src="verify.js"></script>
 </body>
