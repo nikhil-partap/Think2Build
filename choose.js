@@ -380,11 +380,29 @@ window.CH_BOOT = function () {
   var detailRoot = document.getElementById("ch-detail-root");
   if (detailRoot) {
     var params = new URLSearchParams(window.location.search);
-    var id = params.get("id");
-    var listing = CH_LISTINGS.find(function (l) { return l.id === id; });
+    // id can come from ?id=, from #id (survives redirects), or from the last room opened in this tab
+    var id = (params.get("id") || location.hash.replace(/^#/, "") || "").trim().toLowerCase();
+    if (!id) { try { id = sessionStorage.getItem("ch_last_room") || ""; } catch (e) {} }
+    var listing = CH_LISTINGS.find(function (l) { return l.id.toLowerCase() === id; });
+
+    if (!id) {
+      // nothing to show: go to the room list instead of a dead end
+      window.location.replace("explore.html");
+      return;
+    }
+    if (listing) {
+      try { sessionStorage.setItem("ch_last_room", listing.id); } catch (e) {}
+      if (!params.get("id")) history.replaceState(null, "", "listing.html?id=" + listing.id);
+    }
 
     if (!listing) {
-      detailRoot.innerHTML = '<div class="ch-empty"><h3>Room not found.</h3><p><a href="explore.html">Back to all rooms</a></p></div>';
+      var picks = CH_LISTINGS.slice().sort(function (a, b) { return stayScore(b.scores) - stayScore(a.scores); }).slice(0, 3);
+      detailRoot.innerHTML = '<div class="ch-empty"><h3>That room isn\'t listed anymore.</h3><p>Here are the top-rated rooms right now.</p></div>' +
+        '<div class="ch-grid">' + picks.map(cardHTML).join("") + '</div>' +
+        '<p style="text-align:center;margin-top:28px"><a class="btn btn-outline" href="explore.html">See all rooms</a></p>';
+      detailRoot.querySelectorAll(".ch-card").forEach(function (card) {
+        card.addEventListener("click", function () { window.location.href = "listing.html?id=" + card.dataset.id; });
+      });
     } else {
       document.title = esc(listing.title) + " · TrustNest";
 

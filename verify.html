@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Check a listing Â· TrustNest</title>
+  <title>Trust Check · TrustNest</title>
   <meta name="description" content="Paste any rental listing and get a trust report before you pay a token.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="motion.css">
+  <link rel="stylesheet" href="inspect.css">
 </head>
 <body>
   <div class="page">
@@ -20,7 +21,7 @@
         <span>TrustNest</span>
       </a>
       <nav class="links" aria-label="Main">
-        <a href="verify.html" aria-current="page">Verify listings</a>
+        <a href="verify.html" aria-current="page">Trust Check</a>
         <a href="explore.html">StayScores</a>
         <a href="flatmates.html">Find flatmates</a>
         <a href="protect.html">Protect</a>
@@ -29,10 +30,20 @@
     </header>
 
     <div class="v-head">
-      <h1>Check a listing before you pay.</h1>
-      <p>Paste the message, add what you know and upload the photos. You'll get a trust report in seconds.</p>
+      <h1>Check before you pay. Prove it when you move in.</h1>
+      <p>Scan a rental listing for scams, then compare handover photos with what you actually found, so hidden damage can't be blamed on you.</p>
     </div>
 
+    <div class="tc-tabs" role="tablist" aria-label="Trust Check tools">
+      <button type="button" class="tc-tab on" role="tab" id="tc-tab-scan" aria-selected="true" aria-controls="tc-scan">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>Scan a listing
+      </button>
+      <button type="button" class="tc-tab" role="tab" id="tc-tab-inspect" aria-selected="false" aria-controls="tc-inspect" tabindex="-1">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5"/><path d="M17 9v2M7 9v6"/></svg>Move-in check <em>New</em>
+      </button>
+    </div>
+
+    <div class="tc-panel" id="tc-scan" role="tabpanel" aria-labelledby="tc-tab-scan">
     <div class="v-grid">
       <!-- ============ Input ============ -->
       <form class="v-form card" id="vForm" novalidate>
@@ -69,10 +80,10 @@
                 <option value="3bhk">3BHK</option>
               </select>
             </label>
-            <label>Monthly rent (â‚¹)
+            <label>Monthly rent (₹)
               <input id="rent" type="number" inputmode="numeric" min="0" placeholder="Detect from text">
             </label>
-            <label>Deposit asked (â‚¹)
+            <label>Deposit asked (₹)
               <input id="deposit" type="number" inputmode="numeric" min="0" placeholder="Optional">
             </label>
             <label>Owner's phone
@@ -175,6 +186,105 @@
       </div>
       <ul class="v-feed-list" id="feed"></ul>
     </section>
+    </div>
+
+    <!-- ============ MOVE-IN CHECK ============ -->
+    <div class="tc-panel" id="tc-inspect" role="tabpanel" aria-labelledby="tc-tab-inspect" hidden>
+      <div class="in-intro">
+        <div>
+          <h2>Hidden damage? Compare it with the handover photos.</h2>
+          <p>The owner photographs every spot before you move in. If a socket is broken or a drain is blocked a few days later, photograph the same spot. TrustNest compares the two and highlights what changed, with dates, so the damage isn't blamed on you.</p>
+        </div>
+        <button type="button" class="btn btn-outline" id="in-demo">Load a demo flat</button>
+      </div>
+
+      <div class="in-grid">
+        <aside class="in-side card">
+          <label class="in-field">Property
+            <select id="in-prop"><option value="">Choose a property</option></select>
+          </label>
+          <form class="in-newprop" id="in-newprop">
+            <input id="in-prop-name" type="text" placeholder="New property, e.g. Room 3, Sunrise PG">
+            <button type="submit" class="btn btn-solid">Add</button>
+          </form>
+
+          <div class="in-role" role="group" aria-label="I am the">
+            <span>I am the</span>
+            <div class="seg"><button type="button" data-role="landlord">Owner</button><button type="button" data-role="tenant" class="on">Tenant</button></div>
+          </div>
+
+          <div class="in-spots-head"><h3>Spots</h3><span id="in-sum"></span></div>
+          <ul class="in-spots" id="in-spots"></ul>
+          <form class="in-newspot" id="in-newspot">
+            <select id="in-room"><option>Bedroom</option><option>Bathroom</option><option>Kitchen</option><option>Hall</option><option>Balcony</option></select>
+            <input id="in-item" type="text" placeholder="Spot, e.g. Switchboard">
+            <button type="submit" class="btn btn-outline">Add spot</button>
+          </form>
+        </aside>
+
+        <section class="in-main card" aria-live="polite">
+          <div class="in-empty" id="in-empty">
+            <div class="in-empty-art" aria-hidden="true"><span></span><span></span></div>
+            <h3>Pick a spot to compare</h3>
+            <p>Or load the demo flat to see a hidden water leak and a cracked wall get caught.</p>
+          </div>
+
+          <div id="in-view" hidden>
+            <div class="in-view-head">
+              <div><p class="in-crumb" id="in-crumb"></p><h3 id="in-title"></h3></div>
+              <span class="in-status" id="in-status"></span>
+            </div>
+
+            <div class="in-pair">
+              <figure class="in-slot" id="in-before">
+                <figcaption><strong>At handover</strong><span>Owner's photo</span></figcaption>
+                <div class="in-frame"></div>
+                <label class="btn btn-outline in-up">Upload owner photo<input type="file" accept="image/*" data-side="before" hidden></label>
+              </figure>
+              <figure class="in-slot" id="in-after">
+                <figcaption><strong>After move-in</strong><span>Tenant's photo</span></figcaption>
+                <div class="in-frame"></div>
+                <label class="btn btn-outline in-up">Upload tenant photo<input type="file" accept="image/*" data-side="after" hidden></label>
+              </figure>
+            </div>
+
+            <div class="in-compare" id="in-compare" hidden>
+              <div class="in-compare-head">
+                <h4>Compare</h4>
+                <label class="in-toggle"><input type="checkbox" id="in-highlight" checked> Highlight changes</label>
+              </div>
+              <div class="in-slider" id="in-slider">
+                <img id="in-cmp-after" alt="Photo after move-in">
+                <div class="in-cmp-before" id="in-cmp-before-wrap"><img id="in-cmp-before" alt="Photo at handover"></div>
+                <canvas id="in-heat" aria-hidden="true"></canvas>
+                <input type="range" id="in-range" min="0" max="100" value="50" aria-label="Slide between handover and move-in photo">
+                <span class="in-handle" id="in-handle" aria-hidden="true"></span>
+                <span class="in-tag l">Handover</span><span class="in-tag r">Now</span>
+              </div>
+              <div class="in-verdict" id="in-verdict"></div>
+              <label class="in-field">What's wrong? (tenant)
+                <textarea id="in-note" rows="2" placeholder="e.g. Socket sparks and the cover is cracked. Wasn't shown at handover."></textarea>
+              </label>
+              <div class="in-actions">
+                <button type="button" class="btn btn-solid" id="in-report">Report hidden issue</button>
+                <button type="button" class="btn btn-outline" id="in-ok">Mark as same as handover</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="in-report card" id="in-reportcard" hidden>
+        <div class="in-report-head">
+          <div><h3>Hidden-issue report</h3><p id="in-report-sub"></p></div>
+          <div class="in-report-btns">
+            <button type="button" class="btn btn-outline" id="in-locker">Add to evidence locker</button>
+            <button type="button" class="btn btn-solid" id="in-pdf">Save as PDF</button>
+          </div>
+        </div>
+        <ul class="in-issues" id="in-issues"></ul>
+      </section>
+    </div>
 
     <footer class="footer">
       <a class="logo small" href="index.html">
@@ -192,5 +302,6 @@
   <script src="scanner.js"></script>
   <script src="verify.js"></script>
   <script src="auth.js"></script>
+  <script src="inspect.js"></script>
 </body>
 </html>
